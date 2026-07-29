@@ -1,0 +1,72 @@
+=======================
+OSPF_LSA_configurations
+=======================
+
+=================
+R1 configurations
+=================
+
+
+R1(config)#interface ethernet 0/0
+R1(config-if)#ip address 192.168.12.1 255.255.255.0
+R1(config-if)#no shutdown 
+
+
+R1(config)#interface loopback 1
+R1(config-if)#ip address 1.1.1.1 255.255.255.0
+
+               
+R1(config)#router ospf 1
+R1(config-router)#router-id 1.1.1.1 
+R1(config-router)#network 1.1.1.0 0.0.0.255 area 0
+R1(config-router)#network 192.168.12.0 0.0.0.255 area 0
+
+
+
+
+=================
+R2 configurations
+=================
+
+
+R2(config)#interface ethernet 0/0
+R2(config-if)#ip address 192.168.12.2 255.255.255.0
+R2(config-if)#no shutdown 
+
+
+R2(config)#interface ethernet 0/1
+R2(config-if)#ip address 192.168.23.1 255.255.255.0
+R2(config-if)#no shutdown
+
+
+R2(config)#interface loopback 1
+R2(config-if)#ip address 2.2.2.2 255.255.255.0
+
+
+R2(config)#router ospf 1
+R2(config-router)#router-id 2.2.2.2
+R2(config-router)#network 192.168.12.0 0.0.0.255 area 0
+R2(config-router)#network 192.168.23.0 0.0.0.255 area 1
+
+
+
+
+=================
+R3 configurations
+=================
+
+
+R3(config)#interface ethernet 0/0
+R3(config-if)#ip address 192.168.23.2 255.255.255.0
+R3(config-if)#no shutdown 
+
+
+R3(config)#interface loopback 1
+R3(config-if)#ip address 3.3.3.3 255.255.255.0 
+
+
+R3(config)#router ospf 1
+R3(config-router)#router-id 3.3.3.3 
+R3(config-router)#network 192.168.23.0 0.0.0.255 area 1
+R3(config-router)#network 3.3.3.0 0.0.0.255 area 1     
+
