@@ -22,12 +22,12 @@ This lab focuses on verifying OSPF neighbor adjacencies across backbone and non-
 | Device | Role | Interface | IP Address | Subnet Mask | Assigned OSPF Area |
 | :---   | :--- | :---      | :---       | :---        | :---               |
 | **R1** | Internal Backbone Router | Ethernet0/0 | `192.168.12.1` | `255.255.255.0` | **Area 0** (Backbone) |
-| | | Loopback1 | `1.1.1.1` | `255.255.255.255` | **Area 0** (Backbone) |
+| | | Loopback1 | `1.1.1.1` | `255.255.255.0` | **Area 0** (Backbone) |
 | **R2** | Area Border Router (ABR) | Ethernet0/0 | `192.168.12.2` | `255.255.255.0` | **Area 0** (Backbone) |
 | | | Ethernet0/1 | `192.168.23.1` | `255.255.255.0` | **Area 1** (Standard Area) |
-| | | Loopback1 | `2.2.2.2` | `255.255.255.255` | **Area 0** (Backbone) |
+| | | Loopback1 | `2.2.2.2` | `255.255.255.0` | **Area 0** (Backbone) |
 | **R3** | Internal Standard Router | Ethernet0/1 | `192.168.23.2` | `255.255.255.0` | **Area 1** (Standard Area) |
-| | | Loopback1 | `3.3.3.3` | `255.255.255.255` | **Area 1** (Standard Area) |
+| | | Loopback1 | `3.3.3.3` | `255.255.255.0` | **Area 1** (Standard Area) |
 
 ---
 
