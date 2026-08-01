@@ -40,26 +40,24 @@ The objective is to establish 100% end-to-end IP reachability across Area 0 whil
 
 ---
 
-**Key Verifications**
-
-## Key Verifications & Expected Results
+## Key Verifications**
 
 1. **OSPF Neighbor Adjacencies:**
   * Verified R3 as **DR** (`FULL/DR`) and R2 as **BDR** (`FULL/BDR`) on the Broadcast LAN segment.
   * Verified R3 ↔ R4 link state as **`FULL/ -`**, confirming DR/BDR election bypass on P2P links.
-<br>
+
 2. **Interface Network Types:**
   * Ethernet LAN interfaces verified as `Network Type BROADCAST`.
   * Inter-router P2P links verified as `Network Type POINT_TO_POINT`.
-<br>  
+
 3. **OSPF Database Analysis:**
   * Verified Type 1 Router LSAs from all 4 routers in Area 0.
   * Verified Type 2 Network LSA generated exclusively by DR R3 (`10.10.10.3`).
   * Differentiated **Transit Networks** (LAN), **P2P Links**, and **Stub Networks** (Loopbacks) inside Type 1 LSA details.
-<br>
+
 4. **Routing Table:**
   * Confirmed all OSPF Intra-Area routes (`O`) learned across P2P and Broadcast domains.
-<br>  
+  
 5. **End-to-End Connectivity:**
   * Achieved 100% reachability across all Loopbacks.
 
