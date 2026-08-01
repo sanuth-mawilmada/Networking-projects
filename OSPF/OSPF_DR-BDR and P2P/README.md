@@ -40,7 +40,7 @@ The objective is to establish 100% end-to-end IP reachability across Area 0 whil
 
 ---
 
-## Key Verifications**
+## Key Verifications:
 
 1. **OSPF Neighbor Adjacencies:**
   * Verified R3 as **DR** (`FULL/DR`) and R2 as **BDR** (`FULL/BDR`) on the Broadcast LAN segment.
