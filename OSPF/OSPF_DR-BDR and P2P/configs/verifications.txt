@@ -1,0 +1,459 @@
+=============
+Verifications
+=============
+
+
+================
+R1 Verifications
+================
+
+
+R1#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/BDR        00:00:31    10.10.10.2      Ethernet0/1
+3.3.3.3           1   FULL/DR         00:00:30    10.10.10.3      Ethernet0/1
+
+
+
+
+R1#show ip ospf database 
+
+            OSPF Router with ID (1.1.1.1) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         749         0x80000005 0x00D3F4 2
+2.2.2.2         2.2.2.2         768         0x80000005 0x00C3F7 2
+3.3.3.3         3.3.3.3         769         0x80000008 0x00C230 4
+4.4.4.4         4.4.4.4         1783        0x80000003 0x00D376 3
+
+                Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+10.10.10.3      3.3.3.3         750         0x80000002 0x00E00F
+
+
+
+
+R1#show ip ospf interface ethernet 0/1
+Ethernet0/1 is up, line protocol is up 
+  Internet Address 10.10.10.1/24, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 1.1.1.1, Network Type BROADCAST, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State DROTHER, Priority 1
+  Designated Router (ID) 3.3.3.3, Interface address 10.10.10.3
+  Backup Designated router (ID) 2.2.2.2, Interface address 10.10.10.2
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:04
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 0, maximum is 2
+  Last flood scan time is 0 msec, maximum is 1 msec
+  Neighbor Count is 2, Adjacent neighbor count is 2 
+    Adjacent with neighbor 2.2.2.2  (Backup Designated Router)
+    Adjacent with neighbor 3.3.3.3  (Designated Router)
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R1#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+C        1.1.1.1 is directly connected, Loopback0
+      2.0.0.0/32 is subnetted, 1 subnets
+O        2.2.2.2 [110/11] via 10.10.10.2, 00:13:47, Ethernet0/1
+      3.0.0.0/32 is subnetted, 1 subnets
+O        3.3.3.3 [110/11] via 10.10.10.3, 00:13:47, Ethernet0/1
+      4.0.0.0/32 is subnetted, 1 subnets
+O        4.4.4.4 [110/21] via 10.10.10.3, 00:13:47, Ethernet0/1
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.10.10.0/24 is directly connected, Ethernet0/1
+L        10.10.10.1/32 is directly connected, Ethernet0/1
+      20.0.0.0/30 is subnetted, 1 subnets
+O        20.20.20.0 [110/20] via 10.10.10.3, 00:13:47, Ethernet0/1
+
+
+
+
+R1#ping 4.4.4.4 source 1.1.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 4.4.4.4, timeout is 2 seconds:
+Packet sent with a source address of 1.1.1.1 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 2/2/3 ms
+
+
+
+
+================
+R2 Verifications
+================
+
+
+R2#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+1.1.1.1           1   FULL/DROTHER    00:00:34    10.10.10.1      Ethernet0/2
+3.3.3.3           1   FULL/DR         00:00:33    10.10.10.3      Ethernet0/2
+
+
+
+
+R2#show ip ospf database 
+
+            OSPF Router with ID (2.2.2.2) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         955         0x80000005 0x00D3F4 2
+2.2.2.2         2.2.2.2         973         0x80000005 0x00C3F7 2
+3.3.3.3         3.3.3.3         974         0x80000008 0x00C230 4
+4.4.4.4         4.4.4.4         40          0x80000004 0x00D177 3
+
+                Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+10.10.10.3      3.3.3.3         955         0x80000002 0x00E00F
+
+
+
+
+R2#show ip ospf interface ethernet 0/2
+Ethernet0/2 is up, line protocol is up 
+  Internet Address 10.10.10.2/24, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 2.2.2.2, Network Type BROADCAST, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State BDR, Priority 1
+  Designated Router (ID) 3.3.3.3, Interface address 10.10.10.3
+  Backup Designated router (ID) 2.2.2.2, Interface address 10.10.10.2
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:06
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 0, maximum is 1
+  Last flood scan time is 0 msec, maximum is 1 msec
+  Neighbor Count is 2, Adjacent neighbor count is 2 
+    Adjacent with neighbor 1.1.1.1
+    Adjacent with neighbor 3.3.3.3  (Designated Router)
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R2#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+O        1.1.1.1 [110/11] via 10.10.10.1, 00:16:11, Ethernet0/2
+      2.0.0.0/32 is subnetted, 1 subnets
+C        2.2.2.2 is directly connected, Loopback0
+      3.0.0.0/32 is subnetted, 1 subnets
+O        3.3.3.3 [110/11] via 10.10.10.3, 00:16:23, Ethernet0/2
+      4.0.0.0/32 is subnetted, 1 subnets
+O        4.4.4.4 [110/21] via 10.10.10.3, 00:16:23, Ethernet0/2
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.10.10.0/24 is directly connected, Ethernet0/2
+L        10.10.10.2/32 is directly connected, Ethernet0/2
+      20.0.0.0/30 is subnetted, 1 subnets
+O        20.20.20.0 [110/20] via 10.10.10.3, 00:16:23, Ethernet0/2
+
+
+
+
+
+================
+R3 Verifications
+================
+
+
+R3#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           0   FULL/  -        00:00:35    20.20.20.2      Ethernet0/0
+1.1.1.1           1   FULL/DROTHER    00:00:34    10.10.10.1      Ethernet0/3
+2.2.2.2           1   FULL/BDR        00:00:34    10.10.10.2      Ethernet0/3
+
+
+
+
+R3#show ip ospf database 
+
+            OSPF Router with ID (3.3.3.3) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         1185        0x80000005 0x00D3F4 2
+2.2.2.2         2.2.2.2         1203        0x80000005 0x00C3F7 2
+3.3.3.3         3.3.3.3         1203        0x80000008 0x00C230 4
+4.4.4.4         4.4.4.4         269         0x80000004 0x00D177 3
+
+                Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+10.10.10.3      3.3.3.3         1184        0x80000002 0x00E00F
+
+
+
+
+R3#show ip ospf interface ethernet 0/3
+Ethernet0/3 is up, line protocol is up 
+  Internet Address 10.10.10.3/24, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 3.3.3.3, Network Type BROADCAST, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 3.3.3.3, Interface address 10.10.10.3
+  Backup Designated router (ID) 2.2.2.2, Interface address 10.10.10.2
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:05
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 2
+  Last flood scan time is 0 msec, maximum is 1 msec
+  Neighbor Count is 2, Adjacent neighbor count is 2 
+    Adjacent with neighbor 1.1.1.1
+    Adjacent with neighbor 2.2.2.2  (Backup Designated Router)
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R3#show ip ospf interface ethernet 0/0
+Ethernet0/0 is up, line protocol is up 
+  Internet Address 20.20.20.1/30, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 3.3.3.3, Network Type POINT_TO_POINT, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:00
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/3/3, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 2, maximum is 2
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1 
+    Adjacent with neighbor 4.4.4.4
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R3#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+O        1.1.1.1 [110/11] via 10.10.10.1, 00:21:08, Ethernet0/3
+      2.0.0.0/32 is subnetted, 1 subnets
+O        2.2.2.2 [110/11] via 10.10.10.2, 00:21:18, Ethernet0/3
+      3.0.0.0/32 is subnetted, 1 subnets
+C        3.3.3.3 is directly connected, Loopback0
+      4.0.0.0/32 is subnetted, 1 subnets
+O        4.4.4.4 [110/11] via 20.20.20.2, 00:21:38, Ethernet0/0
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.10.10.0/24 is directly connected, Ethernet0/3
+L        10.10.10.3/32 is directly connected, Ethernet0/3
+      20.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        20.20.20.0/30 is directly connected, Ethernet0/0
+L        20.20.20.1/32 is directly connected, Ethernet0/0
+
+
+
+
+================
+R4 Verifications
+================
+
+
+R4#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           0   FULL/  -        00:00:35    20.20.20.1      Ethernet0/0
+
+
+
+   
+R4#show ip ospf database 
+
+            OSPF Router with ID (4.4.4.4) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         1488        0x80000005 0x00D3F4 2
+2.2.2.2         2.2.2.2         1507        0x80000005 0x00C3F7 2
+3.3.3.3         3.3.3.3         1507        0x80000008 0x00C230 4
+4.4.4.4         4.4.4.4         571         0x80000004 0x00D177 3
+
+                Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+10.10.10.3      3.3.3.3         1488        0x80000002 0x00E00F
+
+
+
+
+R4#show ip ospf interface ethernet 0/0
+Ethernet0/0 is up, line protocol is up 
+  Internet Address 20.20.20.2/30, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 4.4.4.4, Network Type POINT_TO_POINT, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:06
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1 
+    Adjacent with neighbor 3.3.3.3
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R4#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+O        1.1.1.1 [110/21] via 20.20.20.1, 00:25:40, Ethernet0/0
+      2.0.0.0/32 is subnetted, 1 subnets
+O        2.2.2.2 [110/21] via 20.20.20.1, 00:26:01, Ethernet0/0
+      3.0.0.0/32 is subnetted, 1 subnets
+O        3.3.3.3 [110/11] via 20.20.20.1, 00:42:59, Ethernet0/0
+      4.0.0.0/32 is subnetted, 1 subnets
+C        4.4.4.4 is directly connected, Loopback0
+      10.0.0.0/24 is subnetted, 1 subnets
+O        10.10.10.0 [110/20] via 20.20.20.1, 00:26:11, Ethernet0/0
+      20.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        20.20.20.0/30 is directly connected, Ethernet0/0
+L        20.20.20.2/32 is directly connected, Ethernet0/0
+
+
+
+
+R4#ping 1.1.1.1 source 4.4.4.4
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 1.1.1.1, timeout is 2 seconds:
+Packet sent with a source address of 4.4.4.4 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 2/2/3 ms
+
+
+
+
+R4#ping 2.2.2.2 source 4.4.4.4
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2.2.2.2, timeout is 2 seconds:
+Packet sent with a source address of 4.4.4.4 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/3 ms
+
+
+
+
+R4#ping 3.3.3.3 source 4.4.4.4
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 3.3.3.3, timeout is 2 seconds:
+Packet sent with a source address of 4.4.4.4 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/3/6 ms
+
+
+
+
+================
+SW Verifications
+================
+
+
+SW#show mac address-table 
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    aabb.cc00.1010    DYNAMIC     Et0/1
+   1    aabb.cc00.2020    DYNAMIC     Et0/2
+   1    aabb.cc00.3030    DYNAMIC     Et0/3
+Total Mac Addresses for this criterion: 3
+
+
+
+
+SW#show interfaces status 
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Et0/0                        connected    1            auto   auto unknown
+Et0/1                        connected    1            auto   auto unknown
+Et0/2                        connected    1            auto   auto unknown
+Et0/3                        connected    1            auto   auto unknown
+
