@@ -1,0 +1,175 @@
+=================
+MD5_verifications
+=================
+
+
+================
+R3 Verifications
+================
+
+
+R3#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           0   FULL/  -        00:00:38    20.20.20.2      Ethernet0/0
+
+
+
+
+R3#show ip ospf database 
+
+            OSPF Router with ID (3.3.3.3) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+3.3.3.3         3.3.3.3         13          0x80000005 0x00321F 3
+4.4.4.4         4.4.4.4         18          0x80000004 0x00D177 3
+
+
+
+
+R3#show ip ospf interface ethernet 0/0
+Ethernet0/0 is up, line protocol is up 
+  Internet Address 20.20.20.1/30, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 3.3.3.3, Network Type POINT_TO_POINT, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:09
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1 
+    Adjacent with neighbor 4.4.4.4
+  Suppress hello for 0 neighbor(s)
+  Cryptographic authentication enabled
+    Youngest key id is 1
+
+
+
+
+R3#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      3.0.0.0/32 is subnetted, 1 subnets
+C        3.3.3.3 is directly connected, Loopback0
+      4.0.0.0/32 is subnetted, 1 subnets
+O        4.4.4.4 [110/11] via 20.20.20.2, 00:00:48, Ethernet0/0
+      20.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        20.20.20.0/30 is directly connected, Ethernet0/0
+L        20.20.20.1/32 is directly connected, Ethernet0/0
+
+
+
+
+R3#ping 4.4.4.4 source 3.3.3.3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 4.4.4.4, timeout is 2 seconds:
+Packet sent with a source address of 3.3.3.3 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/3 ms
+
+
+
+
+================
+R4 Verifications
+================
+
+
+R4#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           0   FULL/  -        00:00:34    20.20.20.1      Ethernet0/0
+
+
+
+
+R4#show ip ospf database 
+
+            OSPF Router with ID (4.4.4.4) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+3.3.3.3         3.3.3.3         158         0x80000005 0x00321F 3
+4.4.4.4         4.4.4.4         0           0x80000005 0x00CF78 3
+
+
+
+
+R4#show ip ospf interface ethernet 0/0
+Ethernet0/0 is up, line protocol is up 
+  Internet Address 20.20.20.2/30, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 4.4.4.4, Network Type POINT_TO_POINT, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:09
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1 
+    Adjacent with neighbor 3.3.3.3
+  Suppress hello for 0 neighbor(s)
+  Cryptographic authentication enabled
+    Youngest key id is 1
+
+
+
+
+R4#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      3.0.0.0/32 is subnetted, 1 subnets
+O        3.3.3.3 [110/11] via 20.20.20.1, 00:02:53, Ethernet0/0
+      4.0.0.0/32 is subnetted, 1 subnets
+C        4.4.4.4 is directly connected, Loopback0
+      20.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        20.20.20.0/30 is directly connected, Ethernet0/0
+L        20.20.20.2/32 is directly connected, Ethernet0/0
+
+
+
+
+R4#ping 3.3.3.3 source 4.4.4.4
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 3.3.3.3, timeout is 2 seconds:
+Packet sent with a source address of 4.4.4.4 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R4#
+

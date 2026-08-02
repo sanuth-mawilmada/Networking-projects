@@ -1,0 +1,188 @@
+========================================
+MD5_Authentication mismatch verification
+========================================
+
+
+================
+R3 verifications
+================
+
+
+R3#debug ip ospf events 
+OSPF events debugging is on
+   
+R3#debug ip ospf adj 
+OSPF adjacency debugging is on
+
+
+
+
+*Aug  2 16:33:52.626: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+
+*Aug  2 16:34:02.091: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+
+*Aug  2 16:34:11.695: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+
+
+
+
+R3(config)#interface ethernet 0/0
+R3(config-if)#no ip ospf message-digest-key 1 md5 cisco123
+
+*Aug  2 16:37:13.425: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.2 : Mismatched Authentication Key - Invalid cryptographic authentication Key ID 1 on interfaceo  
+*Aug  2 16:37:16.185: %OSPF-4-NOVALIDKEY: No valid authentication send key is available on interface Ethernet0/0
+*Aug  2 16:37:16.185: OSPF-1 ADJ   Et0/0: Send with youngest Key 0
+
+R3(config-if)#ip ospf message-digest-key 1 md5 cisco   
+
+
+
+
+*Aug  2 16:37:22.787: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.2 : Mismatched Authentication key - ID 1
+R3#
+*Aug  2 16:37:23.891: %SYS-5-CONFIG_I: Configured from console by console
+R3#
+*Aug  2 16:37:25.726: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+R3#
+*Aug  2 16:37:31.883: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.2 : Mismatched Authentication key - ID 1
+R3#
+*Aug  2 16:37:35.286: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+R3#
+*Aug  2 16:37:41.743: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.2 : Mismatched Authentication key - ID 1
+R3#
+*Aug  2 16:37:43.596: OSPF-1 ADJ   Et0/0: 4.4.4.4 address 20.20.20.2 is dead
+*Aug  2 16:37:43.596: OSPF-1 ADJ   Et0/0: 4.4.4.4 address 20.20.20.2 is dead, state DOWN
+R3#
+*Aug  2 16:37:43.596: %OSPF-5-ADJCHG: Process 1, Nbr 4.4.4.4 on Ethernet0/0 from FULL to DOWN, Neighbor Down: Dead timer expired
+R3#
+*Aug  2 16:37:44.813: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+R3#
+*Aug  2 16:37:51.121: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.2 : Mismatched Authentication key - ID 1
+R3#
+*Aug  2 16:37:54.766: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+R3#
+*Aug  2 16:38:00.662: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.2 : Mismatched Authentication key - ID 1
+R3#
+*Aug  2 16:38:04.401: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+R3#
+*Aug  2 16:38:10.559: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.2 : Mismatched Authentication key - ID 1
+R3#
+*Aug  2 16:38:13.476: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+R3#
+*Aug  2 16:38:20.258: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.2 : Mismatched Authentication key - ID 1
+
+
+
+
+R3(config)#interface ethernet 0/0
+R3(config-if)#no ip ospf message-digest-key 1 md5 cisco
+
+*Aug  2 16:40:17.948: %OSPF-4-NOVALIDKEY: No valid authentication send key is available on interface Ethernet0/0
+*Aug  2 16:40:17.949: OSPF-1 ADJ   Et0/0: Send with youngest Key 0
+
+R3(config-if)#ip ospf message-digest-key 1 md5 cisco123   
+
+
+
+
+*Aug  2 16:40:23.185: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: 2 Way Communication to 4.4.4.4, state 2WAY
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: Nbr 4.4.4.4: Prepare dbase exchange
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: Send DBD to 4.4.4.4 seq 0x2284 opt 0x52 flag 0x7 len 32
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: Rcv DBD from 4.4.4.4 seq 0x2149 opt 0x52 flag 0x7 len 32  mtu 1500 state EXSTART
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: NBR Negotiation Done. We are the SLAVE
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: Nbr 4.4.4.4: Summary list built, size 2
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: Send DBD to 4.4.4.4 seq 0x2149 opt 0x52 flag 0x2 len 72
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Rcv DBD from 4.4.4.4 seq 0x214A opt 0x52 flag 0x1 len 72  mtu 1500 state EXCHANGE
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Exchange Done with 4.4.4.4
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Send LS REQ to 4.4.4.4 length 36
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Send DBD to 4.4.4.4 seq 0x214A opt 0x52 flag 0x0 len 32
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Rcv LS UPD from Nbr ID 4.4.4.4 length 76 LSA count 1
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Synchronized with 4.4.4.4, state FULL
+*Aug  2 16:40:23.189: %OSPF-5-ADJCHG: Process 1, Nbr 4.4.4.4 on Ethernet0/0 from LOADING to FULL, Loading Done
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Rcv LS REQ from 4.4.4.4 length 36 LSA count 1
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.701: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+
+
+
+
+R3#undebug all 
+All possible debugging has been turned off
+
+
+
+
+================
+R4 verifications
+================
+
+
+R4#debug ip ospf events 
+OSPF events debugging is on
+   
+R4#debug ip ospf adj 
+OSPF adjacency debugging is on
+
+
+
+
+*Aug  2 16:38:58.154: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:39:01.117: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.1 : Mismatched Authentication key - ID 1
+*Aug  2 16:39:07.577: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:39:10.359: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.1 : Mismatched Authentication key - ID 1
+*Aug  2 16:39:16.858: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:39:19.883: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.1 : Mismatched Authentication key - ID 1
+*Aug  2 16:39:26.458: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:39:29.587: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.1 : Mismatched Authentication key - ID 1
+*Aug  2 16:39:36.136: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:39:39.028: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.1 : Mismatched Authentication key - ID 1
+*Aug  2 16:39:45.516: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:39:49.032: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.1 : Mismatched Authentication key - ID 1
+*Aug  2 16:39:55.036: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:39:58.627: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.1 : Mismatched Authentication key - ID 1
+*Aug  2 16:40:04.101: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:08.400: OSPF-1 ADJ   Et0/0: Rcv pkt from 20.20.20.1 : Mismatched Authentication key - ID 1
+*Aug  2 16:40:13.756: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+
+
+
+
+*Aug  2 16:40:23.186: OSPF-1 ADJ   Et0/0: 2 Way Communication to 3.3.3.3, state 2WAY
+*Aug  2 16:40:23.186: OSPF-1 ADJ   Et0/0: Nbr 3.3.3.3: Prepare dbase exchange
+*Aug  2 16:40:23.186: OSPF-1 ADJ   Et0/0: Send DBD to 3.3.3.3 seq 0x2149 opt 0x52 flag 0x7 len 32
+*Aug  2 16:40:23.186: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.186: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: Rcv DBD from 3.3.3.3 seq 0x2284 opt 0x52 flag 0x7 len 32  mtu 1500 state EXSTART
+*Aug  2 16:40:23.187: OSPF-1 ADJ   Et0/0: First DBD and we are not SLAVE
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Rcv DBD from 3.3.3.3 seq 0x2149 opt 0x52 flag 0x2 len 72  mtu 1500 state EXSTART
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: NBR Negotiation Done. We are the MASTER
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Nbr 3.3.3.3: Summary list built, size 2
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Send DBD to 3.3.3.3 seq 0x214A opt 0x52 flag 0x1 len 72
+*Aug  2 16:40:23.188: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Rcv LS REQ from 3.3.3.3 length 36 LSA count 1
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Send LS UPD to 20.20.20.1 length 76 LSA count 1
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Rcv DBD from 3.3.3.3 seq 0x214A opt 0x52 flag 0x0 len 32  mtu 1500 state EXCHANGE
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Exchange Done with 3.3.3.3
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:23.189: OSPF-1 ADJ   Et0/0: Send LS REQ to 3.3.3.3 length 36
+*Aug  2 16:40:23.190: OSPF-1 ADJ   Et0/0: Rcv LS UPD from Nbr ID 3.3.3.3 length 76 LSA count 1
+*Aug  2 16:40:23.190: OSPF-1 ADJ   Et0/0: Synchronized with 3.3.3.3, state FULL
+*Aug  2 16:40:23.190: %OSPF-5-ADJCHG: Process 1, Nbr 3.3.3.3 on Ethernet0/0 from LOADING to FULL, Loading Done
+
+
+
+
+*Aug  2 16:40:23.701: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+*Aug  2 16:40:25.692: OSPF-1 ADJ   Et0/0: Send with youngest Key 1
+
+
+
+
+R4#undebug all 
+All possible debugging has been turned off

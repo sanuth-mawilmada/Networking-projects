@@ -1,0 +1,142 @@
+===============================================
+Plain text_Authentication mismatch verification
+===============================================
+
+================
+R1 verifications
+================
+
+
+R1#debug ip ospf events      
+OSPF events debugging is on
+         
+R1#debug ip ospf adj 
+OSPF adjacency debugging is on
+
+
+
+
+R1(config)#interface ethernet 0/0
+R1(config-if)#ip ospf authentication-key cisco
+
+
+
+
+*Aug  2 16:18:00.321: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+*Aug  2 16:18:09.631: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+*Aug  2 16:18:18.655: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+*Aug  2 16:18:28.319: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+*Aug  2 16:18:30.484: OSPF-1 ADJ   Et0/0: 2.2.2.2 address 10.10.10.2 is dead
+*Aug  2 16:18:30.484: OSPF-1 ADJ   Et0/0: 2.2.2.2 address 10.10.10.2 is dead, state DOWN
+*Aug  2 16:18:30.484: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Ethernet0/0 from FULL to DOWN, Neighbor Down: Dead timer expired
+
+*Aug  2 16:18:37.829: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+R1#
+*Aug  2 16:18:47.721: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+R1#
+*Aug  2 16:18:57.166: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+R1#
+*Aug  2 16:19:06.277: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+R1#
+*Aug  2 16:19:15.727: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+R1#
+*Aug  2 16:19:25.507: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+R1#
+*Aug  2 16:19:34.876: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+R1#
+*Aug  2 16:19:44.664: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.2,  : Mismatched Authentication Key - Clear Text
+
+
+
+
+R1(config)#interface ethernet 0/0
+R1(config-if)#ip ospf authentication-key cisco123
+
+
+
+
+*Aug  2 16:21:00.402: OSPF-1 ADJ   Et0/0: 2 Way Communication to 2.2.2.2, state 2WAY
+*Aug  2 16:21:00.402: OSPF-1 ADJ   Et0/0: Nbr 2.2.2.2: Prepare dbase exchange
+*Aug  2 16:21:00.402: OSPF-1 ADJ   Et0/0: Send DBD to 2.2.2.2 seq 0x155 opt 0x52 flag 0x7 len 32
+*Aug  2 16:21:00.403: OSPF-1 ADJ   Et0/0: Rcv DBD from 2.2.2.2 seq 0x1F83 opt 0x52 flag 0x7 len 32  mtu 1500 state EXSTART
+*Aug  2 16:21:00.403: OSPF-1 ADJ   Et0/0: NBR Negotiation Done. We are the SLAVE
+*Aug  2 16:21:00.403: OSPF-1 ADJ   Et0/0: Nbr 2.2.2.2: Summary list built, size 2
+*Aug  2 16:21:00.404: OSPF-1 ADJ   Et0/0: Send DBD to 2.2.2.2 seq 0x1F83 opt 0x52 flag 0x2 len 72
+*Aug  2 16:21:00.404: OSPF-1 ADJ   Et0/0: Rcv DBD from 2.2.2.2 seq 0x1F84 opt 0x52 flag 0x1 len 72  mtu 1500 state EXCHANGE
+*Aug  2 16:21:00.404: OSPF-1 ADJ   Et0/0: Exchange Done with 2.2.2.2
+*Aug  2 16:21:00.404: OSPF-1 ADJ   Et0/0: Send LS REQ to 2.2.2.2 length 36
+*Aug  2 16:21:00.404: OSPF-1 ADJ   Et0/0: Send DBD to 2.2.2.2 seq 0x1F84 opt 0x52 flag 0x0 len 32
+*Aug  2 16:21:00.405: OSPF-1 ADJ   Et0/0: Rcv LS UPD from Nbr ID 2.2.2.2 length 76 LSA count 1
+*Aug  2 16:21:00.405: OSPF-1 ADJ   Et0/0: Synchronized with 2.2.2.2, state FULL
+*Aug  2 16:21:00.405: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Ethernet0/0 from LOADING to FULL, Loading Done
+*Aug  2 16:21:00.405: OSPF-1 ADJ   Et0/0: Rcv LS REQ from 2.2.2.2 length 36 LSA count 1
+*Aug  2 16:21:40.412: OSPF-1 ADJ   Et0/0: Nbr 2.2.2.2: Clean-up dbase exchange
+
+
+
+
+R1#undebug all 
+All possible debugging has been turned off
+
+
+
+
+================
+R2 verifications
+================
+
+
+R2#debug ip ospf events 
+OSPF events debugging is on
+    
+R2#debug ip ospf adj 
+OSPF adjacency debugging is on
+
+
+
+
+*Aug  2 16:17:59.644: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.1,  : Mismatched Authentication Key - Clear Text
+R2#
+*Aug  2 16:18:09.326: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.1,  : Mismatched Authentication Key - Clear Text
+R2#
+*Aug  2 16:18:18.982: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.1,  : Mismatched Authentication Key - Clear Text
+R2#
+*Aug  2 16:18:28.063: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.1,  : Mismatched Authentication Key - Clear Text
+R2#
+*Aug  2 16:18:30.576: OSPF-1 ADJ   Et0/0: 1.1.1.1 address 10.10.10.1 is dead
+*Aug  2 16:18:30.576: OSPF-1 ADJ   Et0/0: 1.1.1.1 address 10.10.10.1 is dead, state DOWN
+*Aug  2 16:18:30.576: %OSPF-5-ADJCHG: Process 1, Nbr 1.1.1.1 on Ethernet0/0 from FULL to DOWN, Neighbor Down: Dead timer expired
+R2#
+*Aug  2 16:18:37.367: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.1,  : Mismatched Authentication Key - Clear Text
+R2#
+*Aug  2 16:18:46.678: OSPF-1 ADJ   Et0/0: Rcv pkt from 10.10.10.1,  : Mismatched Authentication Key - Clear Text
+
+
+
+
+
+*Aug  2 16:21:00.403: OSPF-1 ADJ   Et0/0: 2 Way Communication to 1.1.1.1, state 2WAY
+*Aug  2 16:21:00.403: OSPF-1 ADJ   Et0/0: Nbr 1.1.1.1: Prepare dbase exchange
+*Aug  2 16:21:00.403: OSPF-1 ADJ   Et0/0: Send DBD to 1.1.1.1 seq 0x1F83 opt 0x52 flag 0x7 len 32
+*Aug  2 16:21:00.403: OSPF-1 ADJ   Et0/0: Rcv DBD from 1.1.1.1 seq 0x155 opt 0x52 flag 0x7 len 32  mtu 1500 state EXSTART
+*Aug  2 16:21:00.403: OSPF-1 ADJ   Et0/0: First DBD and we are not SLAVE
+*Aug  2 16:21:00.404: OSPF-1 ADJ   Et0/0: Rcv DBD from 1.1.1.1 seq 0x1F83 opt 0x52 flag 0x2 len 72  mtu 1500 state EXSTART
+*Aug  2 16:21:00.404: OSPF-1 ADJ   Et0/0: NBR Negotiation Done. We are the MASTER
+*Aug  2 16:21:00.404: OSPF-1 ADJ   Et0/0: Nbr 1.1.1.1: Summary list built, size 2
+*Aug  2 16:21:00.404: OSPF-1 ADJ   Et0/0: Send DBD to 1.1.1.1 seq 0x1F84 opt 0x52 flag 0x1 len 72
+*Aug  2 16:21:00.405: OSPF-1 ADJ   Et0/0: Rcv LS REQ from 1.1.1.1 length 36 LSA count 1
+*Aug  2 16:21:00.405: OSPF-1 ADJ   Et0/0: Send LS UPD to 10.10.10.1 length 76 LSA count 1
+*Aug  2 16:21:00.405: OSPF-1 ADJ   Et0/0: Rcv DBD from 1.1.1.1 seq 0x1F84 opt 0x52 flag 0x0 len 32  mtu 1500 state EXCHANGE
+*Aug  2 16:21:00.405: OSPF-1 ADJ   Et0/0: Exchange Done with 1.1.1.1
+*Aug  2 16:21:00.405: OSPF-1 ADJ   Et0/0: Send LS REQ to 1.1.1.1 length 36
+*Aug  2 16:21:00.406: OSPF-1 ADJ   Et0/0: Rcv LS UPD from Nbr ID 1.1.1.1 length 76 LSA count 1
+*Aug  2 16:21:00.406: OSPF-1 ADJ   Et0/0: Synchronized with 1.1.1.1, state FULL
+R2#
+*Aug  2 16:21:00.406: %OSPF-5-ADJCHG: Process 1, Nbr 1.1.1.1 on Ethernet0/0 from LOADING to FULL, Loading Done
+*Aug  2 16:21:40.407: OSPF-1 ADJ   Et0/0: Nbr 1.1.1.1: Clean-up dbase exchange
+
+
+
+
+R2#undebug all 
+All possible debugging has been turned off
