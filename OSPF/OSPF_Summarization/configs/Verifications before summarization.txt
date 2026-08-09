@@ -1,0 +1,153 @@
+====================================
+Verifications (Before summarization)
+====================================
+
+
+
+
+
+================
+R1 Verifications
+================
+
+
+R1#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/BDR        00:00:33    192.168.12.2    Ethernet0/0
+
+
+
+
+R1#show ip ospf database 
+
+            OSPF Router with ID (1.1.1.1) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         800         0x80000003 0x0024D2 4
+
+                Summary Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+2.2.2.2         1.1.1.1         1485        0x80000001 0x007DA8
+192.168.12.0    1.1.1.1         1060        0x80000002 0x009721
+
+                Router Link States (Area 1)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         1060        0x80000004 0x001B16 1
+2.2.2.2         2.2.2.2         1491        0x80000003 0x0035DB 2
+
+                Net Link States (Area 1)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+192.168.12.1    1.1.1.1         1505        0x80000001 0x00C7EB
+
+                Summary Net Link States (Area 1)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+172.16.0.1      1.1.1.1         1060        0x80000002 0x00E395
+172.16.1.1      1.1.1.1         1060        0x80000002 0x00D89F
+172.16.2.1      1.1.1.1         800         0x80000002 0x00CDA9
+172.16.3.1      1.1.1.1         1060        0x80000002 0x00C2B3
+
+
+
+ 
+R1#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      2.0.0.0/32 is subnetted, 1 subnets
+O        2.2.2.2 [110/11] via 192.168.12.2, 00:26:27, Ethernet0/0
+      172.16.0.0/16 is variably subnetted, 8 subnets, 2 masks
+C        172.16.0.0/24 is directly connected, Loopback0
+L        172.16.0.1/32 is directly connected, Loopback0
+C        172.16.1.0/24 is directly connected, Loopback1
+L        172.16.1.1/32 is directly connected, Loopback1
+C        172.16.2.0/24 is directly connected, Loopback2
+L        172.16.2.1/32 is directly connected, Loopback2
+C        172.16.3.0/24 is directly connected, Loopback3
+L        172.16.3.1/32 is directly connected, Loopback3
+      192.168.12.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.12.0/24 is directly connected, Ethernet0/0
+L        192.168.12.1/32 is directly connected, Ethernet0/0
+
+
+
+
+================
+R2 Verifications
+================
+
+
+R2#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+1.1.1.1           1   FULL/DR         00:00:33    192.168.12.1    Ethernet0/0
+
+
+
+
+R2#show ip ospf database 
+
+            OSPF Router with ID (2.2.2.2) (Process ID 1)
+
+                Router Link States (Area 1)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         1077        0x80000004 0x001B16 1
+2.2.2.2         2.2.2.2         1506        0x80000003 0x0035DB 2
+
+                Net Link States (Area 1)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+192.168.12.1    1.1.1.1         1521        0x80000001 0x00C7EB
+
+                Summary Net Link States (Area 1)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+172.16.0.1      1.1.1.1         1077        0x80000002 0x00E395
+172.16.1.1      1.1.1.1         1077        0x80000002 0x00D89F
+172.16.2.1      1.1.1.1         817         0x80000002 0x00CDA9
+172.16.3.1      1.1.1.1         1077        0x80000002 0x00C2B3
+
+
+
+
+R2#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      2.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        2.2.2.0/24 is directly connected, Loopback0
+L        2.2.2.2/32 is directly connected, Loopback0
+      172.16.0.0/32 is subnetted, 4 subnets
+O IA     172.16.0.1 [110/11] via 192.168.12.1, 00:26:52, Ethernet0/0
+O IA     172.16.1.1 [110/11] via 192.168.12.1, 00:26:52, Ethernet0/0
+O IA     172.16.2.1 [110/11] via 192.168.12.1, 00:26:52, Ethernet0/0
+O IA     172.16.3.1 [110/11] via 192.168.12.1, 00:26:52, Ethernet0/0
+      192.168.12.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.12.0/24 is directly connected, Ethernet0/0
+L        192.168.12.2/32 is directly connected, Ethernet0/0
+
