@@ -1,0 +1,92 @@
+================================
+OSPF Virtual Link configurations
+================================
+
+
+=================
+R1 configurations
+=================
+
+
+R1(config)#interface ethernet 0/0
+R1(config-if)#no shutdown 
+R1(config-if)#ip address 10.10.10.1 255.255.255.252
+
+
+R1(config)#interface loopback 0
+R1(config-if)#ip address 1.1.1.1 255.255.255.255
+
+
+R1(config)#interface loopback 1
+R1(config-if)#ip address 100.100.100.100 255.255.255.0
+
+
+R1(config)#router ospf 1
+R1(config-router)#router-id 1.1.1.1 
+
+R1(config-router)#network 1.1.1.1 0.0.0.0 area 0
+
+R1(config-router)#network 100.100.100.0 0.0.0.255 area 0
+
+R1(config-router)#network 10.10.10.0 0.0.0.3 area 1
+
+R1(config-router)#area 1 virtual-link 2.2.2.2
+
+
+
+
+=================
+R2 configurations
+=================
+
+
+R2(config)#interface ethernet 0/0
+R2(config-if)#no shutdown 
+R2(config-if)#ip address 10.10.10.2 255.255.255.252
+
+
+R2(config)#interface ethernet 0/1
+R2(config-if)#no shutdown 
+R2(config-if)#ip address 20.20.20.1 255.255.255.252
+
+
+R2(config)#interface loopback 0
+R2(config-if)#ip address 2.2.2.2 255.255.255.255
+
+
+R2(config)#router ospf 1
+R2(config-router)#router-id 2.2.2.2
+
+R2(config-router)#network 10.10.10.0 0.0.0.3 area 1
+
+R2(config-router)#network 20.20.20.0 0.0.0.3 area 2
+
+R2(config-router)#network 2.2.2.2 0.0.0.0 area 1
+
+R2(config-router)#area 1 virtual-link 1.1.1.1
+
+
+
+
+=================
+R3 configurations
+=================
+
+
+R3(config)#interface Ethernet 0/0
+R3(config-if)#no shutdown 
+R3(config-if)#ip address 20.20.20.2 255.255.255.252
+
+
+R3(config)#interface loopback 0
+R3(config-if)#ip address 3.3.3.3 255.255.255.255
+
+
+R3(config)#router ospf 1 
+R3(config-router)#router-id 3.3.3.3
+
+R3(config-router)#network 3.3.3.3 0.0.0.0 area 2
+
+R3(config-router)#network 20.20.20.0 0.0.0.3 area 2
+
+
