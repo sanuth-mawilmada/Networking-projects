@@ -1,0 +1,68 @@
+===================
+NSSA configurations
+===================
+
+
+=================
+R8 configurations
+=================
+
+
+R8(config)#interface ethernet 0/3
+R8(config-if)#no shutdown 
+R8(config-if)#ip address 33.33.33.2 255.255.255.252
+
+
+R8(config)#interface ethernet 0/0
+R8(config-if)#no shutdown 
+R8(config-if)#ip address 30.30.30.2 255.255.255.252
+
+
+R8(config)#interface loopback 0
+R8(config-if)#ip address 8.8.8.8 255.255.255.255
+
+
+R8(config)#router ospf 1
+R8(config-router)#router-id 8.8.8.8
+
+R8(config-router)#network 8.8.8.8 0.0.0.0 area 0
+
+R8(config-router)#network 33.33.33.0 0.0.0.3 area 0
+
+R8(config-router)#network 30.30.30.0 0.0.0.3 area 3
+
+R8(config-router)#area 3 nssa 
+
+R8(config-router)#area 3 nssa default-information-originate
+
+
+
+
+=================
+R9 configurations
+=================
+
+
+R9(config)#interface ethernet 0/0
+R9(config-if)#no shutdown 
+R9(config-if)#ip address 30.30.30.1 255.255.255.252
+
+
+R9(config)#interface loopback 0
+R9(config-if)#ip address 9.9.9.9 255.255.255.255
+
+
+R9(config)#interface loopback 1
+R9(config-if)#ip address 99.99.99.99 255.255.255.255
+
+
+R9(config)#router ospf 1
+R9(config-router)#router-id 9.9.9.9
+
+R9(config-router)#network 9.9.9.9 0.0.0.0 area 3
+
+R9(config-router)#network 30.30.30.0 0.0.0.3 area 3
+
+R9(config-router)#area 3 nssa 
+
+R9(config-router)#redistribute connected subnets

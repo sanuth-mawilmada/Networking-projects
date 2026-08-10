@@ -1,0 +1,351 @@
+==================
+NSSA verifications
+==================
+
+
+================
+R8 verifications
+================
+
+
+R8#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+1.1.1.1           1   FULL/DR         00:00:38    33.33.33.1      Ethernet0/3
+9.9.9.9           1   FULL/BDR        00:00:37    30.30.30.1      Ethernet0/0
+
+
+
+      
+R8#show ip ospf database 
+
+            OSPF Router with ID (8.8.8.8) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         1402        0x8000000B 0x007D99 5
+2.2.2.2         2.2.2.2         1450        0x80000006 0x001D98 2
+4.4.4.4         4.4.4.4         1745        0x80000005 0x007CDF 2
+6.6.6.6         6.6.6.6         1378        0x80000005 0x00912C 2
+8.8.8.8         8.8.8.8         456         0x80000006 0x00895D 2
+
+                Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+11.11.11.1      1.1.1.1         1383        0x80000003 0x005AAE
+22.22.22.1      1.1.1.1         1644        0x80000002 0x0033AD
+33.33.33.1      1.1.1.1         380         0x80000002 0x006E41
+44.44.44.1      1.1.1.1         1402        0x80000001 0x007E19
+
+                Summary Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+3.3.3.3         2.2.2.2         929         0x80000003 0x002DEE
+5.5.5.5         4.4.4.4         1244        0x80000002 0x009676
+7.7.7.7         6.6.6.6         1073        0x80000001 0x00FFFD
+9.9.9.9         8.8.8.8         1875        0x80000001 0x006786
+10.10.10.0      2.2.2.2         1450        0x80000003 0x0032DB
+20.20.20.0      4.4.4.4         1745        0x80000002 0x008E5A
+30.30.30.0      8.8.8.8         456         0x80000002 0x00AC0E
+40.40.40.0      6.6.6.6         1393        0x80000001 0x008124
+
+                Router Link States (Area 3)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+8.8.8.8         8.8.8.8         1880        0x80000003 0x001610 1
+9.9.9.9         9.9.9.9         1864        0x80000004 0x007475 2
+
+                Net Link States (Area 3)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+30.30.30.2      8.8.8.8         1880        0x80000001 0x00C6AF
+
+                Summary Net Link States (Area 3)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+1.1.1.1         8.8.8.8         456         0x80000003 0x007A8B
+2.2.2.2         8.8.8.8         456         0x80000003 0x00B047
+3.3.3.3         8.8.8.8         456         0x80000003 0x00E603
+4.4.4.4         8.8.8.8         456         0x80000003 0x00549B
+5.5.5.5         8.8.8.8         456         0x80000003 0x008A57
+6.6.6.6         8.8.8.8         1397        0x80000001 0x00FBED
+7.7.7.7         8.8.8.8         1071        0x80000001 0x0032A9
+8.8.8.8         8.8.8.8         456         0x80000003 0x00D221
+10.10.10.0      8.8.8.8         456         0x80000003 0x00EBEF
+11.11.11.0      8.8.8.8         456         0x80000003 0x00637F
+20.20.20.0      8.8.8.8         456         0x80000003 0x00823B
+22.22.22.0      8.8.8.8         456         0x80000003 0x00D5EB
+33.33.33.0      8.8.8.8         456         0x80000003 0x00E3C6
+40.40.40.0      8.8.8.8         1387        0x80000001 0x00B3CF
+44.44.44.0      8.8.8.8         456         0x80000003 0x00BAC4
+
+                Type-7 AS External Link States (Area 3)
+
+Link ID         ADV Router      Age         Seq#       Checksum Tag
+99.99.99.99     9.9.9.9         1864        0x80000001 0x002C94 0
+
+                Type-5 AS External Link States
+
+Link ID         ADV Router      Age         Seq#       Checksum Tag
+77.77.77.77     6.6.6.6         1072        0x80000001 0x00AE88 0
+99.99.99.99     8.8.8.8         1857        0x80000001 0x00DEEF 0
+100.100.100.100 1.1.1.1         128         0x80000004 0x00B94E 0
+
+
+
+
+R8#show ip ospf interface ethernet 0/3
+Ethernet0/3 is up, line protocol is up 
+  Internet Address 33.33.33.2/30, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 8.8.8.8, Network Type BROADCAST, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State BDR, Priority 1
+  Designated Router (ID) 1.1.1.1, Interface address 33.33.33.1
+  Backup Designated router (ID) 8.8.8.8, Interface address 33.33.33.2
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:06
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 2, maximum is 2
+  Last flood scan time is 0 msec, maximum is 1 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1 
+    Adjacent with neighbor 1.1.1.1  (Designated Router)
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R8#show ip ospf interface ethernet 0/0
+Ethernet0/0 is up, line protocol is up 
+  Internet Address 30.30.30.2/30, Area 3, Attached via Network Statement
+  Process ID 1, Router ID 8.8.8.8, Network Type BROADCAST, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 8.8.8.8, Interface address 30.30.30.2
+  Backup Designated router (ID) 9.9.9.9, Interface address 30.30.30.1
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:09
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/1/3, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 12, maximum is 12
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1 
+    Adjacent with neighbor 9.9.9.9  (Backup Designated Router)
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R8#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+O        1.1.1.1 [110/11] via 33.33.33.1, 00:40:11, Ethernet0/3
+      2.0.0.0/32 is subnetted, 1 subnets
+O        2.2.2.2 [110/21] via 33.33.33.1, 00:40:11, Ethernet0/3
+      3.0.0.0/32 is subnetted, 1 subnets
+O IA     3.3.3.3 [110/31] via 33.33.33.1, 00:40:11, Ethernet0/3
+      4.0.0.0/32 is subnetted, 1 subnets
+O        4.4.4.4 [110/21] via 33.33.33.1, 00:40:11, Ethernet0/3
+      5.0.0.0/32 is subnetted, 1 subnets
+O IA     5.5.5.5 [110/31] via 33.33.33.1, 00:40:11, Ethernet0/3
+      6.0.0.0/32 is subnetted, 1 subnets
+O        6.6.6.6 [110/21] via 33.33.33.1, 00:23:36, Ethernet0/3
+      7.0.0.0/32 is subnetted, 1 subnets
+O IA     7.7.7.7 [110/31] via 33.33.33.1, 00:18:10, Ethernet0/3
+      8.0.0.0/32 is subnetted, 1 subnets
+C        8.8.8.8 is directly connected, Loopback0
+      9.0.0.0/32 is subnetted, 1 subnets
+O        9.9.9.9 [110/11] via 30.30.30.1, 00:31:34, Ethernet0/0
+      10.0.0.0/30 is subnetted, 1 subnets
+O IA     10.10.10.0 [110/30] via 33.33.33.1, 00:40:11, Ethernet0/3
+      11.0.0.0/30 is subnetted, 1 subnets
+O        11.11.11.0 [110/20] via 33.33.33.1, 00:40:11, Ethernet0/3
+      20.0.0.0/30 is subnetted, 1 subnets
+O IA     20.20.20.0 [110/30] via 33.33.33.1, 00:40:11, Ethernet0/3
+      22.0.0.0/30 is subnetted, 1 subnets
+O        22.22.22.0 [110/20] via 33.33.33.1, 00:40:11, Ethernet0/3
+      30.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        30.30.30.0/30 is directly connected, Ethernet0/0
+L        30.30.30.2/32 is directly connected, Ethernet0/0
+      33.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        33.33.33.0/30 is directly connected, Ethernet0/3
+L        33.33.33.2/32 is directly connected, Ethernet0/3
+      40.0.0.0/30 is subnetted, 1 subnets
+O IA     40.40.40.0 [110/30] via 33.33.33.1, 00:23:26, Ethernet0/3
+      44.0.0.0/30 is subnetted, 1 subnets
+O        44.44.44.0 [110/20] via 33.33.33.1, 00:40:11, Ethernet0/3
+      77.0.0.0/32 is subnetted, 1 subnets
+O E2     77.77.77.77 [110/20] via 33.33.33.1, 00:18:09, Ethernet0/3
+      99.0.0.0/32 is subnetted, 1 subnets
+O N2     99.99.99.99 [110/20] via 30.30.30.1, 00:31:17, Ethernet0/0
+      100.0.0.0/32 is subnetted, 1 subnets
+O E2     100.100.100.100 [110/20] via 33.33.33.1, 00:40:11, Ethernet0/3
+
+
+
+
+================
+R9 verifications
+================
+
+
+R9#show ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+8.8.8.8           1   FULL/DR         00:00:31    30.30.30.2      Ethernet0/0
+
+
+
+      
+R9#show ip ospf database 
+
+            OSPF Router with ID (9.9.9.9) (Process ID 1)
+
+                Router Link States (Area 3)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+8.8.8.8         8.8.8.8         154         0x80000004 0x001411 1
+9.9.9.9         9.9.9.9         94          0x80000005 0x007276 2
+
+                Net Link States (Area 3)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+30.30.30.2      8.8.8.8         154         0x80000002 0x00C4B0
+
+                Summary Net Link States (Area 3)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+1.1.1.1         8.8.8.8         646         0x80000003 0x007A8B
+2.2.2.2         8.8.8.8         646         0x80000003 0x00B047
+3.3.3.3         8.8.8.8         646         0x80000003 0x00E603
+4.4.4.4         8.8.8.8         646         0x80000003 0x00549B
+5.5.5.5         8.8.8.8         646         0x80000003 0x008A57
+6.6.6.6         8.8.8.8         1587        0x80000001 0x00FBED
+7.7.7.7         8.8.8.8         1261        0x80000001 0x0032A9
+8.8.8.8         8.8.8.8         646         0x80000003 0x00D221
+10.10.10.0      8.8.8.8         646         0x80000003 0x00EBEF
+11.11.11.0      8.8.8.8         646         0x80000003 0x00637F
+20.20.20.0      8.8.8.8         646         0x80000003 0x00823B
+22.22.22.0      8.8.8.8         646         0x80000003 0x00D5EB
+33.33.33.0      8.8.8.8         646         0x80000003 0x00E3C6
+40.40.40.0      8.8.8.8         1577        0x80000001 0x00B3CF
+44.44.44.0      8.8.8.8         646         0x80000003 0x00BAC4
+
+                Type-7 AS External Link States (Area 3)
+
+Link ID         ADV Router      Age         Seq#       Checksum Tag
+99.99.99.99     9.9.9.9         94          0x80000002 0x002A95 0
+
+
+
+
+R9#show ip ospf interface ethernet 0/0
+Ethernet0/0 is up, line protocol is up 
+  Internet Address 30.30.30.1/30, Area 3, Attached via Network Statement
+  Process ID 1, Router ID 9.9.9.9, Network Type BROADCAST, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State BDR, Priority 1
+  Designated Router (ID) 8.8.8.8, Interface address 30.30.30.2
+  Backup Designated router (ID) 9.9.9.9, Interface address 30.30.30.1
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:00
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 2, maximum is 2
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1 
+    Adjacent with neighbor 8.8.8.8  (Designated Router)
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R9#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is 30.30.30.2 to network 0.0.0.0
+
+O*N2  0.0.0.0/0 [110/1] via 30.30.30.2, 00:00:07, Ethernet0/0
+      1.0.0.0/32 is subnetted, 1 subnets
+O IA     1.1.1.1 [110/21] via 30.30.30.2, 00:00:39, Ethernet0/0
+      2.0.0.0/32 is subnetted, 1 subnets
+O IA     2.2.2.2 [110/31] via 30.30.30.2, 00:00:39, Ethernet0/0
+      3.0.0.0/32 is subnetted, 1 subnets
+O IA     3.3.3.3 [110/41] via 30.30.30.2, 00:00:39, Ethernet0/0
+      4.0.0.0/32 is subnetted, 1 subnets
+O IA     4.4.4.4 [110/31] via 30.30.30.2, 00:00:39, Ethernet0/0
+      5.0.0.0/32 is subnetted, 1 subnets
+O IA     5.5.5.5 [110/41] via 30.30.30.2, 00:00:39, Ethernet0/0
+      6.0.0.0/32 is subnetted, 1 subnets
+O IA     6.6.6.6 [110/31] via 30.30.30.2, 00:00:39, Ethernet0/0
+      7.0.0.0/32 is subnetted, 1 subnets
+O IA     7.7.7.7 [110/41] via 30.30.30.2, 00:00:39, Ethernet0/0
+      8.0.0.0/32 is subnetted, 1 subnets
+O IA     8.8.8.8 [110/11] via 30.30.30.2, 00:00:39, Ethernet0/0
+      9.0.0.0/32 is subnetted, 1 subnets
+C        9.9.9.9 is directly connected, Loopback0
+      10.0.0.0/30 is subnetted, 1 subnets
+O IA     10.10.10.0 [110/40] via 30.30.30.2, 00:00:39, Ethernet0/0
+      11.0.0.0/30 is subnetted, 1 subnets
+O IA     11.11.11.0 [110/30] via 30.30.30.2, 00:00:39, Ethernet0/0
+      20.0.0.0/30 is subnetted, 1 subnets
+O IA     20.20.20.0 [110/40] via 30.30.30.2, 00:00:39, Ethernet0/0
+      22.0.0.0/30 is subnetted, 1 subnets
+O IA     22.22.22.0 [110/30] via 30.30.30.2, 00:00:39, Ethernet0/0
+      30.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        30.30.30.0/30 is directly connected, Ethernet0/0
+L        30.30.30.1/32 is directly connected, Ethernet0/0
+      33.0.0.0/30 is subnetted, 1 subnets
+O IA     33.33.33.0 [110/20] via 30.30.30.2, 00:00:39, Ethernet0/0
+      40.0.0.0/30 is subnetted, 1 subnets
+O IA     40.40.40.0 [110/40] via 30.30.30.2, 00:00:39, Ethernet0/0
+      44.0.0.0/30 is subnetted, 1 subnets
+O IA     44.44.44.0 [110/30] via 30.30.30.2, 00:00:39, Ethernet0/0
+      99.0.0.0/32 is subnetted, 1 subnets
+C        99.99.99.99 is directly connected, Loopback1k1
+
+
+
+
+R9#ping 1.1.1.1 source 9.9.9.9
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 1.1.1.1, timeout is 2 seconds:
+Packet sent with a source address of 9.9.9.9 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+

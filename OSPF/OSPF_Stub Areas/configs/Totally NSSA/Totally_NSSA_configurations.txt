@@ -1,0 +1,70 @@
+============
+Totally NSSA
+============
+
+===========================
+Totally NSSA configurations
+===========================
+
+
+=================
+R6 configurations
+=================
+
+
+R6(config)#interface ethernet 0/2
+R6(config-if)#no shutdown 
+R6(config-if)#ip address 44.44.44.2 255.255.255.252
+
+
+R6(config)#interface ethernet 0/0
+R6(config-if)#no shutdown 
+R6(config-if)#ip address 40.40.40.1 255.255.255.252
+
+
+R6(config)#interface loopback 0
+R6(config-if)#ip address 6.6.6.6 255.255.255.255
+
+
+R6(config)#router ospf 1
+R6(config-router)#router-id 6.6.6.6
+
+R6(config-router)#network 6.6.6.6 0.0.0.0 area 0
+
+R6(config-router)#network 44.44.44.0 0.0.0.3 area 0
+
+R6(config-router)#network 40.40.40.0 0.0.0.3 area 4
+
+R6(config-router)#area 4 nssa no-summary 
+
+
+
+
+=================
+R7 configurations
+=================
+
+
+R7(config)#interface ethernet 0/0
+R7(config-if)#no shutdown 
+R7(config-if)#ip address 40.40.40.2 255.255.255.252 
+
+
+R7(config)#interface loopback 0
+R7(config-if)#ip address 7.7.7.7 255.255.255.255
+
+
+R7(config)#interface loopback 1
+R7(config-if)#ip address 77.77.77.77 255.255.255.255
+
+
+R7(config)#router ospf 1
+R7(config-router)#router-id 7.7.7.7
+
+R7(config-router)#network 7.7.7.7 0.0.0.0 area 4
+
+R7(config-router)#network 40.40.40.0 0.0.0.3 area 4
+
+R7(config-router)#area 4 nssa 
+
+R7(config-router)#redistribute connected subnets 

@@ -1,0 +1,60 @@
+===========================
+Totally Stub configurations
+===========================
+
+
+=================
+R4 configurations
+=================
+
+
+R4(config)#interface ethernet 0/1
+R4(config-if)#no shutdown 
+R4(config-if)#ip address 22.22.22.2 255.255.255.252 
+
+
+R4(config)#interface ethernet 0/0
+R4(config-if)#no shutdown 
+R4(config-if)#ip address 20.20.20.1 255.255.255.252
+
+
+R4(config)#interface loopback 0
+R4(config-if)#ip address 4.4.4.4 255.255.255.255
+
+
+R4(config)#router ospf 1
+R4(config-router)#router-id 4.4.4.4
+
+R4(config-router)#network 4.4.4.4 0.0.0.0 area 0
+  
+R4(config-router)#network 22.22.22.0 0.0.0.3 area 0
+
+R4(config-router)#network 20.20.20.0 0.0.0.3 area 2
+
+R4(config-router)#area 2 stub no-summary 
+
+
+
+
+=================
+R5 configurations
+=================
+
+
+R5(config)#interface ethernet 0/0
+R5(config-if)#no shutdown 
+R5(config-if)#ip address 20.20.20.2 255.255.255.252
+
+
+R5(config)#interface loopback 0
+R5(config-if)#ip address 5.5.5.5 255.255.255.255
+
+
+R5(config)#router ospf 1
+R5(config-router)#router-id 5.5.5.5
+
+R5(config-router)#network 5.5.5.5 0.0.0.0 area 2
+ 
+R5(config-router)#network 20.20.20.0 0.0.0.3 area 2
+
+R5(config-router)#area 2 stub 
