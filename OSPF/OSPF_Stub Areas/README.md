@@ -26,8 +26,6 @@
 
 ### IP Addressing & Area Assignments Table
 
-### Stub 
-
 |Device |Interface   |IP Address   |Subnet Mask   |OSPF Area   |   
 |:---:|---|---|---|:---:|
 | R1  |Ethernet 0/0   |11.11.11.1   |255.255.255.252   |0   |
