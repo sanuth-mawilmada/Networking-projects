@@ -76,24 +76,28 @@
 
 ### Stub 
 **Configurations:** [View Stub configurations](./configs/Stub/Stub_configurations.txt)
+
 **Verifications:** [View Stub verifications](./configs/Stub/Stub_verifications.txt)
 
 ---
 
 ### Totally Stub 
 **Configurations:** [View Totally Stub configurations](./configs/Totally%20Stub/Totally%20Stub_configurations.txt)
+
 **Verifications:** [View Totally Stub verifications](./configs/Totally%20Stub/Totally%20Stub_verifications.txt)
 
 ---
 
 ### NSSA
 **Configurations:** [View NSSA configurations](./configs/NSSA/NSSA_configurations.txt)
+
 **Verifications:** [View NSSA verifications](./configs/NSSA/NSSA_verifications.txt)
 
 ---
 
 ### Totally NSSA 
 **Configurations:** [View Totally NSSA configurations](./configs/Totally%20NSSA/Totally_NSSA_configurations.txt)
+
 **Verifications:** [View Totally NSSA verifications](./configs/Totally%20NSSA/Totally_NSSA_verifications.txt)
 
 ---
