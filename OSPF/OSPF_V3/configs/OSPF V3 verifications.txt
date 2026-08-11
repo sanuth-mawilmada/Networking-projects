@@ -1,0 +1,247 @@
+=====================
+OSPF_V3_verifications
+=====================
+
+
+================
+R1 verifications
+================
+
+
+R1#show ospfv3 ipv4 neighbor 
+
+          OSPFv3 1 address-family ipv4 (router-id 1.1.1.1)
+
+Neighbor ID     Pri   State           Dead Time   Interface ID    Interface
+10.10.10.2        1   FULL/BDR        00:00:32    3               Ethernet0/0
+
+
+
+
+R1#show ospfv3 ipv4 database 
+
+          OSPFv3 1 address-family ipv4 (router-id 1.1.1.1)
+
+                Router Link States (Area 0)
+
+ADV Router       Age         Seq#        Fragment ID  Link count  Bits
+ 1.1.1.1         312         0x80000002  0            1           None
+ 10.10.10.2      313         0x80000001  0            1           None
+
+                Net Link States (Area 0)
+
+ADV Router       Age         Seq#        Link ID    Rtr count
+ 1.1.1.1         312         0x80000001  3          2
+
+                Link (Type-8) Link States (Area 0)
+
+ADV Router       Age         Seq#        Link ID    Interface
+ 1.1.1.1         408         0x80000001  3          Et0/0
+ 10.10.10.2      313         0x80000001  3          Et0/0
+
+                Intra Area Prefix Link States (Area 0)
+
+ADV Router       Age         Seq#        Link ID    Ref-lstype  Ref-LSID
+ 1.1.1.1         312         0x80000002  0          0x2001      0
+ 1.1.1.1         312         0x80000001  3072       0x2002      3
+ 10.10.10.2      268         0x80000001  0          0x2001      0
+
+
+
+
+R1#show ospfv3 interface ethernet 0/0
+Ethernet0/0 is up, line protocol is up 
+  Link Local Address FE80::A8BB:CCFF:FE00:1000, Interface ID 3
+  Internet Address 10.10.10.1/30
+  Area 0, Process ID 1, Instance ID 64, Router ID 1.1.1.1
+  Network Type BROADCAST, Cost: 10
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 1.1.1.1, local address FE80::A8BB:CCFF:FE00:1000
+  Backup Designated router (ID) 10.10.10.2, local address FE80::A8BB:CCFF:FE00:2000
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:02
+  Graceful restart helper support enabled
+  Index 1/1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 0, maximum is 4
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1 
+    Adjacent with neighbor 10.10.10.2  (Backup Designated Router)
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R1#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+C        1.1.1.1 is directly connected, Loopback0
+      2.0.0.0/32 is subnetted, 1 subnets
+O        2.2.2.2 [110/10] via 10.10.10.2, 00:04:50, Ethernet0/0
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.10.10.0/30 is directly connected, Ethernet0/0
+L        10.10.10.1/32 is directly connected, Ethernet0/0
+
+
+
+
+R1#show ospfv3 ipv4 rib 
+*Aug 11 22:17:01.291: %OSPFv3-5-ADJCHG: Process 1, IPv4, Nbr 2.2.2.2 on Ethernet0/0 from LOADING to FULL, Loading Done
+R1#show ospfv3 ipv4 rib 
+
+          OSPFv3 1 address-family ipv4 (router-id 1.1.1.1)
+
+OSPF local RIB
+Codes: * - Best, > - Installed in global RIB
+
+*   1.1.1.1/32, Intra, cost 0, area 0, Connected
+      via 1.1.1.1, Loopback0
+*>  2.2.2.2/32, Intra, cost 10, area 0
+      via 10.10.10.2, Ethernet0/0
+*   10.10.10.0/30, Intra, cost 10, area 0, Connected
+      via Ethernet0/0
+
+
+
+
+R1#ping 2.2.2.2 source 1.1.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2.2.2.2, timeout is 2 seconds:
+Packet sent with a source address of 1.1.1.1 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+
+
+
+
+
+
+
+
+================
+R2 verifications
+================
+
+
+R2#show ospfv3 ipv4 neighbor 
+
+          OSPFv3 1 address-family ipv4 (router-id 10.10.10.2)
+
+Neighbor ID     Pri   State           Dead Time   Interface ID    Interface
+1.1.1.1           1   FULL/DR         00:00:31    3               Ethernet0/0
+
+
+
+     
+R2#show ospfv3 ipv4 database 
+
+          OSPFv3 1 address-family ipv4 (router-id 10.10.10.2)
+
+                Router Link States (Area 0)
+
+ADV Router       Age         Seq#        Fragment ID  Link count  Bits
+ 1.1.1.1         403         0x80000002  0            1           None
+ 10.10.10.2      402         0x80000001  0            1           None
+
+                Net Link States (Area 0)
+
+ADV Router       Age         Seq#        Link ID    Rtr count
+ 1.1.1.1         403         0x80000001  3          2
+
+                Link (Type-8) Link States (Area 0)
+
+ADV Router       Age         Seq#        Link ID    Interface
+ 1.1.1.1         499         0x80000001  3          Et0/0
+ 10.10.10.2      403         0x80000001  3          Et0/0
+
+                Intra Area Prefix Link States (Area 0)
+
+ADV Router       Age         Seq#        Link ID    Ref-lstype  Ref-LSID
+ 1.1.1.1         403         0x80000002  0          0x2001      0
+ 1.1.1.1         403         0x80000001  3072       0x2002      3
+ 10.10.10.2      358         0x80000001  0          0x2001      0
+
+
+
+
+R2#show ospfv3 interface ethernet 0/0
+Ethernet0/0 is up, line protocol is up 
+  Link Local Address FE80::A8BB:CCFF:FE00:2000, Interface ID 3
+  Internet Address 10.10.10.2/30
+  Area 0, Process ID 1, Instance ID 64, Router ID 10.10.10.2
+  Network Type BROADCAST, Cost: 10
+  Transmit Delay is 1 sec, State BDR, Priority 1
+  Designated Router (ID) 1.1.1.1, local address FE80::A8BB:CCFF:FE00:1000
+  Backup Designated router (ID) 10.10.10.2, local address FE80::A8BB:CCFF:FE00:2000
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:08
+  Graceful restart helper support enabled
+  Index 1/1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1 
+    Adjacent with neighbor 1.1.1.1  (Designated Router)
+  Suppress hello for 0 neighbor(s)
+
+
+
+
+R2#show ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+O        1.1.1.1 [110/10] via 10.10.10.1, 00:06:51, Ethernet0/0
+      2.0.0.0/32 is subnetted, 1 subnets
+C        2.2.2.2 is directly connected, Loopback0
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.10.10.0/30 is directly connected, Ethernet0/0
+L        10.10.10.2/32 is directly connected, Ethernet0/0
+
+
+
+
+R2#show ospfv3 ipv4 rib 
+
+          OSPFv3 1 address-family ipv4 (router-id 2.2.2.2)
+
+OSPF local RIB
+Codes: * - Best, > - Installed in global RIB
+
+*>  1.1.1.1/32, Intra, cost 10, area 0
+      via 10.10.10.1, Ethernet0/0
+*   2.2.2.2/32, Intra, cost 0, area 0, Connected
+      via 2.2.2.2, Loopback0
+*   10.10.10.0/30, Intra, cost 10, area 0, Connected
+      via Ethernet0/0
+
+
+
+
+R2#ping 1.1.1.1 source 2.2.2.2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 1.1.1.1, timeout is 2 seconds:
+Packet sent with a source address of 2.2.2.2 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms

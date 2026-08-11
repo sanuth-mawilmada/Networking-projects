@@ -1,0 +1,76 @@
+======================
+OSPF_V3_configurations
+======================
+
+
+=================
+R1 configurations
+=================
+
+
+R1(config)#ipv6 unicast-routing 
+
+
+R1(config)#interface ethernet 0/0
+
+R1(config-if)#no shutdown 
+
+R1(config-if)#ip address 10.10.10.1 255.255.255.252
+
+R1(config-if)#ipv6 enable 
+
+R1(config-if)#ospfv3 1 ipv4 area 0
+
+
+R1(config)#interface loopback 0
+
+R1(config-if)#ip address 1.1.1.1 255.255.255.255
+
+R1(config-if)#ipv6 enable 
+
+R1(config-if)#ospfv3 1 ipv4 area 0
+
+
+R1(config)#router ospfv3 1
+R1(config-router)#router-id 1.1.1.1
+
+R1(config-router)#address-family ipv4 unicast 
+
+
+
+=================
+R2 configurations
+=================
+
+
+R2(config)#ipv6 unicast-routing 
+
+R2(config)#interface ethernet 0/0
+
+R2(config-if)#no shutdown 
+
+R2(config-if)#ip address 10.10.10.2 255.255.255.252
+
+R2(config-if)#ipv6 enable 
+
+R2(config-if)#ospfv3 1 ipv4 area 0
+
+
+R2(config)#interface loopback 0
+
+R2(config-if)#ip address 2.2.2.2 255.255.255.255
+
+R2(config-if)#ipv6 enable 
+
+R2(config-if)#ospfv3 1 ipv4 area 0
+
+
+R2(config)#router ospfv3 1
+R2(config-router)#router-id 2.2.2.2
+
+R2(config-router)#address-family ipv4 unicast 
+
+
+
+
+
