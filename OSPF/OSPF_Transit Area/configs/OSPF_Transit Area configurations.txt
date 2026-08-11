@@ -1,0 +1,84 @@
+================================
+OSPF_Transit Area configurations
+================================
+
+
+=================
+R1 configurations
+=================
+
+
+R1(config)#interface ethernet 0/0
+R1(config-if)#no shutdown 
+R1(config-if)#ip address 10.10.10.1 255.255.255.252
+
+
+R1(config)#interface loopback 0
+R1(config-if)#ip address 100.100.100.100 255.255.255.255
+
+
+R1(config)#router ospf 1
+R1(config-router)#router-id 100.100.100.100
+
+R1(config-router)#network 100.100.100.100 0.0.0.0 area 0
+
+R1(config-router)#network 10.10.10.1 0.0.0.3 area 1
+
+R1(config-router)#area 1 virtual-link 200.200.200.200
+
+
+
+
+=================
+R2 configurations
+=================
+
+
+R2(config)#interface ethernet 0/0
+R2(config-if)#no shutdown 
+R2(config-if)#ip address 10.10.10.2 255.255.255.252
+
+
+R2(config)#interface ethernet 0/1
+R2(config-if)#no shutdown 
+R2(config-if)#ip address 20.20.20.2 255.255.255.252 
+
+R2(config)#interface loopback 0  
+R2(config-if)#ip address 2.2.2.2 255.255.255.255
+
+
+R2(config)#router ospf 1
+R2(config-router)#router-id 2.2.2.2
+
+R2(config-router)#network 10.10.10.0 0.0.0.3 area 1
+
+R2(config-router)#network 20.20.20.0 0.0.0.3 area 1
+
+R2(config-router)#network 2.2.2.2 0.0.0.0 area 1
+
+
+
+
+=================
+R3 configurations
+=================
+
+R3(config)#interface ethernet 0/1                    
+R3(config-if)#no shutdown 
+R3(config-if)#ip address 20.20.20.1 255.255.255.252
+
+
+R3(config)#interface loopback 0
+R3(config-if)#ip address 200.200.200.200 255.255.255.255
+
+
+R3(config)#router ospf 1
+R3(config-router)#router-id 200.200.200.200
+
+R3(config-router)#network 20.20.20.0 0.0.0.3 area 1
+
+R3(config-router)#network 200.200.200.200 0.0.0.0 area 0
+
+R3(config-router)#area 1 virtual-link 100.100.100.100
+
+
