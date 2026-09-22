@@ -1,0 +1,311 @@
+=============================
+Extended ACL - Configurations
+=============================
+
+=================
+R1 configurations
+=================
+
+username admin secret cisco
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+interface Ethernet0/0
+ ip address 192.168.1.1 255.255.255.0
+interface Ethernet0/1
+ ip address 10.10.10.1 255.255.255.252
+interface Ethernet0/2
+ no ip address
+ shutdown 
+interface Ethernet0/3
+ no ip address
+ shutdown
+router ospf 1
+ router-id 1.1.1.1
+ network 1.1.1.1 0.0.0.0 area 0
+ network 10.10.10.0 0.0.0.3 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+control-plane
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login local
+ transport input telnet
+end
+
+
+
+
+
+
+
+
+=================
+R2 configurations
+=================
+
+username admin secret cisco
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+interface Ethernet0/0
+ no shutdown
+ ip address 192.168.2.1 255.255.255.0
+interface Ethernet0/1
+ no shutdown
+ ip address 10.10.10.2 255.255.255.252
+interface Ethernet0/2
+ no shutdown
+ ip address 172.16.1.1 255.255.255.0
+interface Ethernet0/3
+ no shutdown
+ ip address 20.20.20.1 255.255.255.252
+router ospf 1
+ router-id 2.2.2.2
+ network 10.10.10.0 0.0.0.3 area 0
+ network 20.20.20.0 0.0.0.3 area 0
+ network 172.16.1.0 0.0.0.255 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+ default-information originate
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 20.20.20.2
+access-list dynamic-extended
+control-plane
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login local
+ transport input telnet
+end
+
+
+
+
+
+
+
+
+======================
+Internet conifguration
+======================
+
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+interface Ethernet0/0
+ no shutdown
+ ip address 20.20.20.2 255.255.255.252
+interface Ethernet0/1
+ no ip address
+ shutdown
+interface Ethernet0/2
+ no ip address
+ shutdown 
+interface Ethernet0/3
+ no ip address
+ shutdown
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 20.20.20.1
+control-plane
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+end
+
+
+
+
+
+
+
+
+==========================
+Mail Server configurations
+==========================
+
+interface Ethernet0/0
+ no shutdown
+ ip address 172.16.1.10 255.255.255.0
+ no ip route-cache
+interface Ethernet0/1
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/2
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/3
+ no ip address
+ no ip route-cache
+ shutdown
+no ip routing
+ip default-gateway 172.16.1.1
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+control-plane
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ password cisco
+ login
+ transport input all
+end
+
+
+
+
+
+
+
+
+==========================
+File Server configurations
+==========================
+
+interface Ethernet0/0
+no shutdown
+ ip address 172.16.1.20 255.255.255.0
+ no ip route-cache
+interface Ethernet0/1
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/2
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/3
+ no ip address
+ no ip route-cache
+ shutdown
+no ip routing 
+ip default-gateway 172.16.1.1
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+control-plane
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ password cisco
+ login
+ transport input all
+end
+
+
+
+
+
+
+
+
+==========================
+Web Server configurations
+==========================
+
+interface Ethernet0/0
+no shutdown
+ ip address 172.16.1.30 255.255.255.0
+ no ip route-cache
+interface Ethernet0/1
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/2
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/3
+ no ip address
+ no ip route-cache
+ shutdown
+no ip routing 
+ip default-gateway 172.16.1.1
+ip forward-protocol nd
+ip http server
+ip http secure-server
+control-plane
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+end
+
+
+
+
+
+
+
+
+=======================
+ACL configuration on R1
+=======================
+
+ip access-list extended 110
+
+permit tcp host 192.168.1.10 host 192.168.1.1 eq 23
+permit tcp host 192.168.1.10 host 192.168.2.1 eq 23 
+
+permit ip host 192.168.1.10 host 172.16.1.10
+permit ip host 192.168.1.30 host 172.16.1.10
+
+permit ip host 192.168.1.20 host 172.16.1.20
+
+deny tcp 192.168.1.0 0.0.0.255 any eq telnet
+deny ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
+
+permit ip 192.168.1.0 0.0.0.255 any
+
+interface ethernet 0/0 
+ ip access-group 110 in
+
+
+
+
+
+
+
+
+=======================
+ACL configuration on R2
+=======================
+
+ip access-list extended 120
+
+deny ip 192.168.2.0 0.0.0.255 192.168.1.0 0.0.0.255
+
+permit tcp 192.168.2.0 0.0.0.255 host 172.16.1.30 eq 80
+permit tcp 192.168.2.0 0.0.0.255 host 172.16.1.30 eq 443
+deny ip 192.168.2.0 0.0.0.255 any 
+
+interface ethernet 0/0
+ ip access-group 120 in
+
+
+
+
+ip access-list extended 130
+
+deny icmp any 172.16.1.0  0.0.0.255
+permit ip any any 
+
+interface ethernet 0/2
+ ip access-group 130 out
+
+

@@ -1,0 +1,205 @@
+==========================
+Standard ACL verifications
+==========================
+
+==============================================================================
+Only PC1 from IT department can establish VTY management sessions to R1 and R2
+==============================================================================
+
+
+PC1> ping 192.168.1.1 -3 -p 23
+
+Connect   23@192.168.1.1 seq=1 ttl=255 time=2.609 ms
+SendData  23@192.168.1.1 seq=1 ttl=255 time=2.713 ms
+Close     23@192.168.1.1 timeout(17.196ms)
+Connect   23@192.168.1.1 seq=2 ttl=255 time=7.735 ms
+SendData  23@192.168.1.1 seq=2 ttl=255 time=5.342 ms
+Close     23@192.168.1.1 timeout(14.458ms)
+Connect   23@192.168.1.1 seq=3 ttl=255 time=4.142 ms
+SendData  23@192.168.1.1 seq=3 ttl=255 time=1.151 ms
+Close     23@192.168.1.1 timeout(27.988ms)
+Connect   23@192.168.1.1 seq=4 ttl=255 time=6.031 ms
+SendData  23@192.168.1.1 seq=4 ttl=255 time=2.650 ms
+Close     23@192.168.1.1 timeout(17.764ms)
+Connect   23@192.168.1.1 seq=5 ttl=255 time=7.293 ms
+SendData  23@192.168.1.1 seq=5 ttl=255 time=2.733 ms
+Close     23@192.168.1.1 timeout(12.876ms)
+
+
+PC1> ping 192.168.2.1 -3 -p 23
+
+Connect   23@192.168.2.1 seq=1 ttl=254 time=3.527 ms
+SendData  23@192.168.2.1 seq=1 ttl=254 time=4.172 ms
+Close     23@192.168.2.1 timeout(29.691ms)
+Connect   23@192.168.2.1 seq=2 ttl=254 time=6.331 ms
+SendData  23@192.168.2.1 seq=2 ttl=254 time=2.697 ms
+Close     23@192.168.2.1 timeout(26.456ms)
+Connect   23@192.168.2.1 seq=3 ttl=254 time=10.751 ms
+SendData  23@192.168.2.1 seq=3 ttl=254 time=4.346 ms
+Close     23@192.168.2.1 timeout(11.758ms)
+Connect   23@192.168.2.1 seq=4 ttl=254 time=8.340 ms
+SendData  23@192.168.2.1 seq=4 ttl=254 time=2.743 ms
+Close     23@192.168.2.1 timeout(12.756ms)
+Connect   23@192.168.2.1 seq=5 ttl=254 time=5.748 ms
+SendData  23@192.168.2.1 seq=5 ttl=254 time=2.660 ms
+Close     23@192.168.2.1 timeout(41.413ms)
+
+
+
+
+
+PC3> ping 192.168.1.1 -3 -p 23
+
+Connect   23@192.168.1.1 RST returned
+Connect   23@192.168.1.1 RST returned
+Connect   23@192.168.1.1 RST returned
+Connect   23@192.168.1.1 RST returned
+Connect   23@192.168.1.1 RST returned
+
+PC3> ping 192.168.2.1 -3 -p 23
+
+Connect   23@192.168.2.1 RST returned
+Connect   23@192.168.2.1 RST returned
+Connect   23@192.168.2.1 RST returned
+Connect   23@192.168.2.1 RST returned
+Connect   23@192.168.2.1 RST returned
+
+
+
+
+
+
+
+
+===============================================================
+Restrict Mail Server access to PC1 and PC3 in the IT department
+===============================================================
+
+PC1> ping 172.16.1.10
+
+84 bytes from 172.16.1.10 icmp_seq=1 ttl=253 time=2.555 ms
+84 bytes from 172.16.1.10 icmp_seq=2 ttl=253 time=2.618 ms
+84 bytes from 172.16.1.10 icmp_seq=3 ttl=253 time=3.007 ms
+84 bytes from 172.16.1.10 icmp_seq=4 ttl=253 time=3.167 ms
+84 bytes from 172.16.1.10 icmp_seq=5 ttl=253 time=3.250 ms
+
+
+PC2> ping 172.16.1.10
+
+*10.10.10.2 icmp_seq=1 ttl=254 time=2.315 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.2 icmp_seq=2 ttl=254 time=1.569 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.2 icmp_seq=3 ttl=254 time=1.786 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.2 icmp_seq=4 ttl=254 time=2.001 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.2 icmp_seq=5 ttl=254 time=1.445 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+
+PC3> ping 172.16.1.10
+
+84 bytes from 172.16.1.10 icmp_seq=1 ttl=253 time=5.865 ms
+84 bytes from 172.16.1.10 icmp_seq=2 ttl=253 time=2.467 ms
+84 bytes from 172.16.1.10 icmp_seq=3 ttl=253 time=2.786 ms
+84 bytes from 172.16.1.10 icmp_seq=4 ttl=253 time=5.041 ms
+84 bytes from 172.16.1.10 icmp_seq=5 ttl=253 time=2.376 ms
+
+
+
+
+
+
+
+
+=======================================================================
+Block all traffic between IT department subnet and HR department subnet
+=======================================================================
+
+
+PC2> ping 192.168.2.10
+
+*10.10.10.2 icmp_seq=1 ttl=254 time=1.415 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.2 icmp_seq=2 ttl=254 time=1.822 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.2 icmp_seq=3 ttl=254 time=1.462 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.2 icmp_seq=4 ttl=254 time=1.903 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.2 icmp_seq=5 ttl=254 time=1.698 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+
+PC5> ping 192.168.1.30
+
+*10.10.10.1 icmp_seq=1 ttl=254 time=1.299 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.1 icmp_seq=2 ttl=254 time=2.265 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.1 icmp_seq=3 ttl=254 time=1.750 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.1 icmp_seq=4 ttl=254 time=1.421 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.10.10.1 icmp_seq=5 ttl=254 time=1.952 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+
+
+
+
+
+
+
+========================================================
+Permit Internet access only for the IT department subnet
+========================================================
+
+
+PC3> ping 8.8.8.8
+
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=253 time=1.789 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=253 time=2.378 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=253 time=2.064 ms
+84 bytes from 8.8.8.8 icmp_seq=4 ttl=253 time=1.984 ms
+84 bytes from 8.8.8.8 icmp_seq=5 ttl=253 time=2.308 ms
+
+
+PC4> ping 8.8.8.8
+
+*192.168.2.1 icmp_seq=1 ttl=255 time=1.208 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.2.1 icmp_seq=2 ttl=255 time=0.917 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.2.1 icmp_seq=3 ttl=255 time=1.169 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.2.1 icmp_seq=4 ttl=255 time=0.937 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.2.1 icmp_seq=5 ttl=255 time=1.225 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+
+
+
+
+
+
+
+==============================
+ACL verifications from routers
+==============================
+
+R1#show ip access-lists 
+Standard IP access list 10
+    10 permit 192.168.1.10 (54 matches)
+Standard IP access list 20
+    10 permit 192.168.2.1 (432 matches)
+    20 deny   192.168.2.0, wildcard bits 0.0.0.255 (204 matches)
+    30 permit any (113 matches)
+
+
+
+R2#show ip access-lists 
+Standard IP access list 10
+    10 permit 192.168.1.10 (96 matches)
+Standard IP access list 20
+    10 permit 192.168.1.0, wildcard bits 0.0.0.255 (15 matches)
+    20 deny   192.168.2.0, wildcard bits 0.0.0.255 (10 matches)
+Standard IP access list 30
+    10 permit 192.168.1.10 (15 matches)
+    20 deny   192.168.1.0, wildcard bits 0.0.0.255 (80 matches)
+    30 permit any (22 matches)
+Standard IP access list 40
+    10 permit 192.168.1.10 (9 matches)
+    20 permit 192.168.1.30 (5 matches)
+
+
+
+
+
+
+
+
+
+
