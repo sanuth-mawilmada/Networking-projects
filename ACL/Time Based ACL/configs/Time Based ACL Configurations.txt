@@ -1,0 +1,136 @@
+=============================
+Time Based ACL Configurations
+=============================
+
+
+=====================
+Router configurations
+=====================
+
+interface Ethernet0/0
+ ip address 192.168.1.1 255.255.255.0
+interface Ethernet0/1
+ ip address 10.10.10.1 255.255.255.252
+interface Ethernet0/2
+ no ip address
+ shutdown
+interface Ethernet0/3
+ no ip address
+ shutdown 
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 10.10.10.2
+ip route 210.10.10.10 255.255.255.255 10.10.10.2
+control-plane
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+end
+
+
+
+
+
+
+
+
+=========================
+Web Server configurations
+=========================
+
+no ip routing
+username admin secret cisco
+interface Loopback0
+ ip address 210.10.10.10 255.255.255.255
+interface Loopback1
+ ip address 8.8.8.8 255.255.255.255
+interface Ethernet0/0
+ ip address 10.10.10.2 255.255.255.252
+ no ip route-cache
+interface Ethernet0/1
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/2
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/3
+ no ip address
+ no ip route-cache
+ shutdown
+ip default-gateway 10.10.10.1
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+control-plane
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+end
+
+
+
+
+
+
+
+
+============================
+ACL configurations on Router
+============================
+
+======================
+Configure a time-range
+======================
+
+time-range OFFICETIME
+periodic weekdays 08:00 to 17:00
+
+
+=============================
+Create an ACL with time-range
+=============================
+
+ip access-list extended DENY_INTERNET
+deny tcp any any eq 80 time-range OFFICETIME
+deny tcp any any eq 443 time-range OFFICETIME
+permit ip any any
+exit
+
+
+interface ethernet 0/0
+ip access-group DENY_INTERNET in
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

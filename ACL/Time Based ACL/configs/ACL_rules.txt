@@ -1,0 +1,5 @@
+=========
+ACL rules
+=========
+
+Deny http/https access between 8.00 AM to 5.00 PM on weekdays

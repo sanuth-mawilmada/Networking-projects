@@ -1,0 +1,79 @@
+=====
+On R1
+=====
+
+access-list 10 permit host 192.168.1.10 
+
+line vty 0 4
+ access-class 10 in
+
+
+
+
+
+access-list 20 permit host 192.168.2.1
+access-list 20 deny 192.168.2.0 0.0.0.255
+access-list 20 permit any 
+
+interface ethernet 0/0
+ ip access-group 20 out  
+
+
+
+
+
+
+
+
+=====
+On R2
+=====
+
+access-list 10 permit host 192.168.1.10
+
+line vty 0 4 
+ access-class 10 in 
+
+
+
+
+
+access-list 20 permit 192.168.1.0 0.0.0.255
+access-list 20 deny 192.168.2.0 0.0.0.255
+
+interface ethernet 0/3
+ ip access-group 20 out 
+
+
+
+
+
+access-list 30 permit host 192.168.1.10 
+access-list 30 deny 192.168.1.0 0.0.0.255
+access-list 30 permit any
+
+interface  ethernet 0/0
+ ip access-group 30 out 
+
+
+
+
+
+access-list 40 permit host 192.168.1.10
+access-list 40 permit host 192.168.1.30
+
+interface ethernet 0/2
+ ip access-group 40 out 
+
+
+
+
+
+
+
+
+
+
+
+
+

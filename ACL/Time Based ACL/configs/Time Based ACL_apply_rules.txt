@@ -1,0 +1,23 @@
+======================
+Configure a time-range
+======================
+
+time-range OFFICETIME
+periodic weekdays 08:00 to 17:00
+
+
+
+=============================
+Create an ACL with time-range
+=============================
+
+ip access-list extended DENY_INTERNET
+deny tcp any any eq 80 time-range OFFICETIME
+deny tcp any any eq 443 time-range OFFICETIME
+permit ip any any
+exit
+
+
+interface ethernet 0/0
+ip access-group DENY_INTERNET in
+

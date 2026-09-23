@@ -1,0 +1,159 @@
+============================
+Time Based ACL Verifications
+============================
+
+======
+Before
+======
+
+Router#show clock
+06:08:57.272 UTC Mon Mar 2 2026 
+
+Router#show access-lists 
+Extended IP access list DENY_INTERNET
+    10 deny tcp any any eq www time-range OFFICETIME (inactive)
+    20 deny tcp any any eq 443 time-range OFFICETIME (inactive)
+    30 permit ip any any
+
+
+
+
+
+PC1> ping 8.8.8.8 -3 -p 80
+
+Connect   80@8.8.8.8 seq=1 ttl=254 time=2.332 ms
+SendData  80@8.8.8.8 seq=1 ttl=254 time=2.633 ms
+Close     80@8.8.8.8 seq=1 ttl=254 time=5.527 ms
+Connect   80@8.8.8.8 seq=2 ttl=254 time=2.856 ms
+SendData  80@8.8.8.8 seq=2 ttl=254 time=4.000 ms
+Close     80@8.8.8.8 seq=2 ttl=254 time=4.704 ms
+Connect   80@8.8.8.8 seq=3 ttl=254 time=3.268 ms
+SendData  80@8.8.8.8 seq=3 ttl=254 time=2.555 ms
+Close     80@8.8.8.8 seq=3 ttl=254 time=4.541 ms
+Connect   80@8.8.8.8 seq=4 ttl=254 time=3.240 ms
+SendData  80@8.8.8.8 seq=4 ttl=254 time=3.409 ms
+Close     80@8.8.8.8 seq=4 ttl=254 time=5.052 ms
+Connect   80@8.8.8.8 seq=5 ttl=254 time=3.316 ms
+SendData  80@8.8.8.8 seq=5 ttl=254 time=2.770 ms
+Close     80@8.8.8.8 seq=5 ttl=254 time=5.382 ms
+
+
+
+PC1> ping 8.8.8.8 -3 -p 443
+
+Connect   443@8.8.8.8 seq=1 ttl=254 time=3.570 ms
+SendData  443@8.8.8.8 seq=1 ttl=254 time=3.495 ms
+Close     443@8.8.8.8 timeout(1006.340ms)
+Connect   443@8.8.8.8 seq=2 ttl=254 time=7.248 ms
+SendData  443@8.8.8.8 seq=2 ttl=254 time=3.633 ms
+Close     443@8.8.8.8 seq=2 ttl=254 time=3.622 ms
+Connect   443@8.8.8.8 seq=3 ttl=254 time=4.232 ms
+SendData  443@8.8.8.8 seq=3 ttl=254 time=2.309 ms
+Close     443@8.8.8.8 seq=3 ttl=254 time=5.361 ms
+Connect   443@8.8.8.8 seq=4 ttl=254 time=6.718 ms
+SendData  443@8.8.8.8 seq=4 ttl=254 time=2.764 ms
+Close     443@8.8.8.8 seq=4 ttl=254 time=5.431 ms
+Connect   443@8.8.8.8 seq=5 ttl=254 time=6.682 ms
+SendData  443@8.8.8.8 seq=5 ttl=254 time=3.267 ms
+Close     443@8.8.8.8 seq=5 ttl=254 time=2.833 ms
+
+
+
+
+
+PC2> ping 210.10.10.10 -3 -p 80
+
+Connect   80@210.10.10.10 seq=1 ttl=254 time=3.230 ms
+SendData  80@210.10.10.10 seq=1 ttl=254 time=2.902 ms
+Close     80@210.10.10.10 seq=1 ttl=254 time=5.142 ms
+Connect   80@210.10.10.10 seq=2 ttl=254 time=2.719 ms
+SendData  80@210.10.10.10 seq=2 ttl=254 time=3.397 ms
+Close     80@210.10.10.10 seq=2 ttl=254 time=4.072 ms
+Connect   80@210.10.10.10 seq=3 ttl=254 time=3.015 ms
+SendData  80@210.10.10.10 seq=3 ttl=254 time=1.634 ms
+Close     80@210.10.10.10 seq=3 ttl=254 time=4.046 ms
+Connect   80@210.10.10.10 seq=4 ttl=254 time=3.384 ms
+SendData  80@210.10.10.10 seq=4 ttl=254 time=4.026 ms
+Close     80@210.10.10.10 seq=4 ttl=254 time=5.863 ms
+Connect   80@210.10.10.10 seq=5 ttl=254 time=2.887 ms
+SendData  80@210.10.10.10 seq=5 ttl=254 time=3.030 ms
+Close     80@210.10.10.10 seq=5 ttl=254 time=4.598 ms
+
+
+
+PC2> ping 210.10.10.10 -3 -p 443
+
+Connect   443@210.10.10.10 seq=1 ttl=254 time=3.776 ms
+SendData  443@210.10.10.10 seq=1 ttl=254 time=4.510 ms
+Close     443@210.10.10.10 seq=1 ttl=254 time=7.002 ms
+Connect   443@210.10.10.10 seq=2 ttl=254 time=6.748 ms
+SendData  443@210.10.10.10 seq=2 ttl=254 time=5.293 ms
+Close     443@210.10.10.10 seq=2 ttl=254 time=6.171 ms
+Connect   443@210.10.10.10 seq=3 ttl=254 time=3.057 ms
+SendData  443@210.10.10.10 seq=3 ttl=254 time=3.116 ms
+Close     443@210.10.10.10 seq=3 ttl=254 time=6.759 ms
+Connect   443@210.10.10.10 seq=4 ttl=254 time=4.652 ms
+SendData  443@210.10.10.10 seq=4 ttl=254 time=3.320 ms
+Close     443@210.10.10.10 seq=4 ttl=254 time=9.608 ms
+Connect   443@210.10.10.10 seq=5 ttl=254 time=6.387 ms
+SendData  443@210.10.10.10 seq=5 ttl=254 time=5.249 ms
+Close     443@210.10.10.10 seq=5 ttl=254 time=5.836 ms
+
+
+
+
+
+
+
+
+=====
+After
+=====
+
+Router#clock set 14:00:00 Mar 2 2026
+
+Router#show clock
+14:00:06.270 UTC Mon Mar 2 2026
+
+Router#show access-lists 
+Extended IP access list DENY_INTERNET
+    10 deny tcp any any eq www time-range OFFICETIME (active)
+    20 deny tcp any any eq 443 time-range OFFICETIME (active)
+    30 permit ip any any (123 matches)
+
+
+
+
+
+PC1> ping 8.8.8.8 -3 -p 80 
+
+*192.168.1.1 tcp_seq=1 ttl=255 time=2.555 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.1.1 tcp_seq=3 ttl=255 time=2.413 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.1.1 tcp_seq=5 ttl=255 time=2.690 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+PC1> ping 8.8.8.8 -3 -p 443
+
+*192.168.1.1 tcp_seq=1 ttl=255 time=2.950 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.1.1 tcp_seq=3 ttl=255 time=2.388 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.1.1 tcp_seq=5 ttl=255 time=2.515 ms (ICMP type:3, code:13, Communication administratively prohibit
+
+
+
+
+
+PC2> ping 210.10.10.10 -3 -p 80 
+
+*192.168.1.1 tcp_seq=1 ttl=255 time=1.848 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.1.1 tcp_seq=3 ttl=255 time=2.372 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.1.1 tcp_seq=5 ttl=255 time=3.107 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+PC2> ping 210.10.10.10 -3 -p 443
+
+*192.168.1.1 tcp_seq=1 ttl=255 time=3.241 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.1.1 tcp_seq=3 ttl=255 time=2.757 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*192.168.1.1 tcp_seq=5 ttl=255 time=2.381 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+
+
+
+
