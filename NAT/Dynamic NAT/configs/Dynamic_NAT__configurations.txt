@@ -1,0 +1,83 @@
+===========
+Dynamic NAT
+===========
+
+=====================
+Router Configurations
+=====================
+
+Router(config)#interface ethernet 0/1 
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 192.168.1.1 255.255.255.0
+
+
+Router(config)#interface ethernet 0/0
+Router(config-if)#no shutdown 
+Router(config-if)#ip address 200.0.0.1 255.255.255.248
+
+
+Router(config)#interface loopback 0
+Router(config-if)#ip address 1.1.1.1 255.255.255.255
+
+
+
+
+Router(config)#router ospf 1  
+Router(config-router)#router-id 1.1.1.1
+
+Router(config-router)#network 192.168.1.0 0.0.0.255 area 0
+
+Router(config-router)#network 200.0.0.0 0.0.0.7 area 0
+
+Router(config-router)#network 1.1.1.1 0.0.0.0 area 0
+
+
+
+
+Router(config)#access-list 1 permit 192.168.1.0 0.0.0.255
+
+Router(config)#ip nat pool INTERNET 200.0.0.3 200.0.0.6 netmask 255.255.255.248
+
+Router(config)#ip nat inside source list 1 pool INTERNET
+
+Router(config)#interface ethernet 0/1
+Router(config-if)#ip nat inside 
+
+Router(config)#interface ethernet 0/0
+Router(config-if)#ip nat outside 
+
+
+
+
+
+
+
+
+=======================
+Internet Configurations
+=======================
+
+Internet(config)#interface ethernet 0/0
+Internet(config-if)#no shutdown 
+Internet(config-if)#ip address 200.0.0.2 255.255.255.248
+
+
+Internet(config)#interface loopback 0
+Internet(config-if)#ip address 8.8.8.8 255.255.255.255
+
+
+
+
+Internet(config)#router ospf 1
+Internet(config-router)#router-id 8.8.8.8
+
+Internet(config-router)#network 200.0.0.0 0.0.0.7 area 0
+
+Internet(config-router)#network 8.8.8.8 0.0.0.0 area 0
+
+
+
+
+
+
+

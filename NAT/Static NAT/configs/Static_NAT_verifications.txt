@@ -1,0 +1,82 @@
+========================
+Static NAT_verifications
+========================
+
+
+Router#show ip nat translations 
+Pro Inside global      Inside local       Outside local      Outside global
+--- 200.0.0.3          192.168.1.10       ---                ---
+--- 200.0.0.4          192.168.1.20       ---                ---
+
+
+
+
+PC1> ping 8.8.8.8  
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=254 time=2.041 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=254 time=2.319 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=254 time=1.782 ms
+84 bytes from 8.8.8.8 icmp_seq=4 ttl=254 time=1.974 ms
+84 bytes from 8.8.8.8 icmp_seq=5 ttl=254 time=1.832 ms
+
+
+
+
+Router#show ip nat translations 
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 200.0.0.3:49508   192.168.1.10:49508 8.8.8.8:49508      8.8.8.8:49508
+icmp 200.0.0.3:49764   192.168.1.10:49764 8.8.8.8:49764      8.8.8.8:49764
+icmp 200.0.0.3:50020   192.168.1.10:50020 8.8.8.8:50020      8.8.8.8:50020
+icmp 200.0.0.3:50276   192.168.1.10:50276 8.8.8.8:50276      8.8.8.8:50276
+--- 200.0.0.3          192.168.1.10       ---                ---
+--- 200.0.0.4          192.168.1.20       ---                ---
+
+
+
+
+Router#show ip nat translations 
+Pro Inside global      Inside local       Outside local      Outside global
+--- 200.0.0.3          192.168.1.10       ---                ---
+--- 200.0.0.4          192.168.1.20       ---                ---
+
+
+
+
+PC2> ping 8.8.8.8
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=254 time=1.510 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=254 time=1.944 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=254 time=1.864 ms
+84 bytes from 8.8.8.8 icmp_seq=4 ttl=254 time=2.212 ms
+84 bytes from 8.8.8.8 icmp_seq=5 ttl=254 time=1.909 ms
+
+
+
+
+Router#show ip nat translations 
+Pro Inside global      Inside local       Outside local      Outside global
+--- 200.0.0.3          192.168.1.10       ---                ---
+icmp 200.0.0.4:36453   192.168.1.20:36453 8.8.8.8:36453      8.8.8.8:36453
+icmp 200.0.0.4:36709   192.168.1.20:36709 8.8.8.8:36709      8.8.8.8:36709
+icmp 200.0.0.4:36965   192.168.1.20:36965 8.8.8.8:36965      8.8.8.8:36965
+icmp 200.0.0.4:37221   192.168.1.20:37221 8.8.8.8:37221      8.8.8.8:37221
+icmp 200.0.0.4:37477   192.168.1.20:37477 8.8.8.8:37477      8.8.8.8:37477
+--- 200.0.0.4          192.168.1.20       ---                ---
+
+
+
+
+Router#show ip nat statistics 
+Total active translations: 2 (2 static, 0 dynamic; 0 extended)
+Peak translations: 12, occurred 00:16:00 ago
+Outside interfaces:
+  Ethernet0/0
+Inside interfaces: 
+  Ethernet0/1
+Hits: 54  Misses: 0
+CEF Translated packets: 42, CEF Punted packets: 0
+Expired translations: 28
+Dynamic mappings:
+
+Total doors: 0
+Appl doors: 0
+Normal doors: 0
+Queued Packets: 0

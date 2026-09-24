@@ -1,0 +1,37 @@
+=============================
+Overloading NAT_verifications
+=============================
+
+
+PC1> ping 8.8.8.8
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=254 time=1.791 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=254 time=1.962 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=254 time=1.926 ms
+84 bytes from 8.8.8.8 icmp_seq=4 ttl=254 time=2.369 ms
+84 bytes from 8.8.8.8 icmp_seq=5 ttl=254 time=2.266 ms
+
+
+
+
+PC2> ping 8.8.8.8
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=254 time=2.144 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=254 time=1.892 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=254 time=1.792 ms
+84 bytes from 8.8.8.8 icmp_seq=4 ttl=254 time=2.010 ms
+84 bytes from 8.8.8.8 icmp_seq=5 ttl=254 time=2.612 ms
+
+
+
+
+Router#show ip nat translations 
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 200.0.0.1:10371   192.168.1.10:10371 8.8.8.8:10371      8.8.8.8:10371
+icmp 200.0.0.1:10627   192.168.1.10:10627 8.8.8.8:10627      8.8.8.8:10627
+icmp 200.0.0.1:10883   192.168.1.10:10883 8.8.8.8:10883      8.8.8.8:10883
+icmp 200.0.0.1:11139   192.168.1.10:11139 8.8.8.8:11139      8.8.8.8:11139
+icmp 200.0.0.1:11395   192.168.1.10:11395 8.8.8.8:11395      8.8.8.8:11395
+icmp 200.0.0.1:13955   192.168.1.20:13955 8.8.8.8:13955      8.8.8.8:13955
+icmp 200.0.0.1:14211   192.168.1.20:14211 8.8.8.8:14211      8.8.8.8:14211
+icmp 200.0.0.1:14467   192.168.1.20:14467 8.8.8.8:14467      8.8.8.8:14467
+icmp 200.0.0.1:14723   192.168.1.20:14723 8.8.8.8:14723      8.8.8.8:14723
+icmp 200.0.0.1:14979   192.168.1.20:14979 8.8.8.8:14979      8.8.8.8:14979
